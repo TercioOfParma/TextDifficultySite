@@ -5,6 +5,10 @@
     <ProjectReference Include="..\TextDifficultyDeterminer.Domain\TextDifficultyDeterminer.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Radzen.Blazor" Version="4.19.0" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>

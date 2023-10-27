@@ -34,3 +34,5 @@
 /home/elliot/Documents/TextDifficultyDeterminer/TextDifficultyDeterminer.Website/obj/Debug/net7.0/TextDifficultyDeterminer.Website.pdb
 /home/elliot/Documents/TextDifficultyDeterminer/TextDifficultyDeterminer.Website/obj/Debug/net7.0/TextDifficultyDeterminer.Website.genruntimeconfig.cache
 /home/elliot/Documents/TextDifficultyDeterminer/TextDifficultyDeterminer.Website/obj/Debug/net7.0/ref/TextDifficultyDeterminer.Website.dll
+/home/elliot/Documents/TextDifficultyDeterminer/TextDifficultyDeterminer.Website/bin/Debug/net7.0/Radzen.Blazor.dll
+/home/elliot/Documents/TextDifficultyDeterminer/TextDifficultyDeterminer.Website/bin/Debug/net7.0/System.Linq.Dynamic.Core.dll

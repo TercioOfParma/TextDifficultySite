@@ -1,3 +1,46 @@
-﻿@inherits LayoutComponentBase
+@using Microsoft.AspNetCore.Hosting
+@using Radzen.Blazor 
 
-<main> @Body </main>
+@inherits LayoutComponentBase
+@inject IWebHostEnvironment Environment
+
+<RadzenHeader>
+    <ChildContent>
+        <div class="row justify-content-start align-items-center">
+                <div class="col6 d-flex align-items-center">
+                <RadzenSidebarToggle Click="@((args) => { sidebarExpanded = !sidebarExpanded; bodyExpanded = !bodyExpanded; })">
+                </RadzenSidebarToggle>
+                <RadzenLabel Text="Text Difficulty Tester"></RadzenLabel>
+            </div>
+        </div>
+    </ChildContent>
+</RadzenHeader>
+
+<div style="width: 100%; ">
+    <RadzenBody @ref="@radzenBody" @bind-Expanded="@bodyExpanded">
+        <ChildContent>
+            <RadzenContentContainer Name="main">
+                @Body
+            </RadzenContentContainer>
+        </ChildContent>
+    </RadzenBody>
+</div>
+
+<RadzenSidebar class="print-hide" @ref="@Sidebar" @bind-Expanded="@sidebarExpanded">
+    <ChildContent>
+        <RadzenPanelMenu>
+            <RadzenPanelMenuItem Text="Calculator" Path="/Calculator"></RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Upload Text" Path="/UploadText"></RadzenPanelMenuItem>
+        </RadzenPanelMenu>
+    </ChildContent>
+</RadzenSidebar>
+
+
+@code 
+{
+    RadzenBody radzenBody {get; set;} 
+    RadzenSidebar Sidebar {get; set;}
+
+    bool sidebarExpanded {get; set;} = true;
+    bool bodyExpanded {get; set; } = false;
+}
