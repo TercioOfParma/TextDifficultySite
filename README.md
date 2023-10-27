@@ -20,6 +20,7 @@ Category:
     - Count words by occurence and by percentage
         - Occurence goes by jumps described by Kazakov
         - Percentage goes by 1% from 87% up
+    
 
 Overall Score:
 	Score = (Overall Difficulty of All Words / Word Count) * Sentence Length
