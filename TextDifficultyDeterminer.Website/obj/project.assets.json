@@ -1,11 +1,68 @@
 {
   "version": 3,
   "targets": {
-    "net7.0": {}
+    "net7.0": {
+      "TextDifficultyDeterminer.Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "TextDifficultyDeterminer.Domain": "1.0.0",
+          "TextDifficultyDeterminer.Infrastructure": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/TextDifficultyDeterminer.Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/TextDifficultyDeterminer.Application.dll": {}
+        }
+      },
+      "TextDifficultyDeterminer.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/TextDifficultyDeterminer.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/TextDifficultyDeterminer.Domain.dll": {}
+        }
+      },
+      "TextDifficultyDeterminer.Infrastructure/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "TextDifficultyDeterminer.Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/TextDifficultyDeterminer.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/TextDifficultyDeterminer.Infrastructure.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "TextDifficultyDeterminer.Application/1.0.0": {
+      "type": "project",
+      "path": "../TextDifficultyDeterminer.Application/TextDifficultyDeterminer.Application.csproj",
+      "msbuildProject": "../TextDifficultyDeterminer.Application/TextDifficultyDeterminer.Application.csproj"
+    },
+    "TextDifficultyDeterminer.Domain/1.0.0": {
+      "type": "project",
+      "path": "../TextDifficultyDeterminer.Domain/TextDifficultyDeterminer.Domain.csproj",
+      "msbuildProject": "../TextDifficultyDeterminer.Domain/TextDifficultyDeterminer.Domain.csproj"
+    },
+    "TextDifficultyDeterminer.Infrastructure/1.0.0": {
+      "type": "project",
+      "path": "../TextDifficultyDeterminer.Infrastructure/TextDifficultyDeterminer.Infrastructure.csproj",
+      "msbuildProject": "../TextDifficultyDeterminer.Infrastructure/TextDifficultyDeterminer.Infrastructure.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net7.0": []
+    "net7.0": [
+      "TextDifficultyDeterminer.Application >= 1.0.0",
+      "TextDifficultyDeterminer.Domain >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "/home/elliot/.nuget/packages/": {}
@@ -31,7 +88,14 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "/home/elliot/Documents/TextDifficultyDeterminer/TextDifficultyDeterminer.Application/TextDifficultyDeterminer.Application.csproj": {
+              "projectPath": "/home/elliot/Documents/TextDifficultyDeterminer/TextDifficultyDeterminer.Application/TextDifficultyDeterminer.Application.csproj"
+            },
+            "/home/elliot/Documents/TextDifficultyDeterminer/TextDifficultyDeterminer.Domain/TextDifficultyDeterminer.Domain.csproj": {
+              "projectPath": "/home/elliot/Documents/TextDifficultyDeterminer/TextDifficultyDeterminer.Domain/TextDifficultyDeterminer.Domain.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

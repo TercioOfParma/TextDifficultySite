@@ -1,0 +1,11 @@
+/home/elliot/Documents/TextDifficultyDeterminer/TextDifficultyDeterminer.Domain/bin/Debug/net7.0/TextDifficultyDeterminer.Domain.deps.json
+/home/elliot/Documents/TextDifficultyDeterminer/TextDifficultyDeterminer.Domain/bin/Debug/net7.0/TextDifficultyDeterminer.Domain.dll
+/home/elliot/Documents/TextDifficultyDeterminer/TextDifficultyDeterminer.Domain/bin/Debug/net7.0/TextDifficultyDeterminer.Domain.pdb
+/home/elliot/Documents/TextDifficultyDeterminer/TextDifficultyDeterminer.Domain/obj/Debug/net7.0/TextDifficultyDeterminer.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/home/elliot/Documents/TextDifficultyDeterminer/TextDifficultyDeterminer.Domain/obj/Debug/net7.0/TextDifficultyDeterminer.Domain.AssemblyInfoInputs.cache
+/home/elliot/Documents/TextDifficultyDeterminer/TextDifficultyDeterminer.Domain/obj/Debug/net7.0/TextDifficultyDeterminer.Domain.AssemblyInfo.cs
+/home/elliot/Documents/TextDifficultyDeterminer/TextDifficultyDeterminer.Domain/obj/Debug/net7.0/TextDifficultyDeterminer.Domain.csproj.CoreCompileInputs.cache
+/home/elliot/Documents/TextDifficultyDeterminer/TextDifficultyDeterminer.Domain/obj/Debug/net7.0/TextDifficultyDeterminer.Domain.dll
+/home/elliot/Documents/TextDifficultyDeterminer/TextDifficultyDeterminer.Domain/obj/Debug/net7.0/refint/TextDifficultyDeterminer.Domain.dll
+/home/elliot/Documents/TextDifficultyDeterminer/TextDifficultyDeterminer.Domain/obj/Debug/net7.0/TextDifficultyDeterminer.Domain.pdb
+/home/elliot/Documents/TextDifficultyDeterminer/TextDifficultyDeterminer.Domain/obj/Debug/net7.0/ref/TextDifficultyDeterminer.Domain.dll

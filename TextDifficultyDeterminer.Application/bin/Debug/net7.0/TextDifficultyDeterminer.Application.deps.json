@@ -1,0 +1,50 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "TextDifficultyDeterminer.Application/1.0.0": {
+        "dependencies": {
+          "TextDifficultyDeterminer.Domain": "1.0.0",
+          "TextDifficultyDeterminer.Infrastructure": "1.0.0"
+        },
+        "runtime": {
+          "TextDifficultyDeterminer.Application.dll": {}
+        }
+      },
+      "TextDifficultyDeterminer.Domain/1.0.0": {
+        "runtime": {
+          "TextDifficultyDeterminer.Domain.dll": {}
+        }
+      },
+      "TextDifficultyDeterminer.Infrastructure/1.0.0": {
+        "dependencies": {
+          "TextDifficultyDeterminer.Domain": "1.0.0"
+        },
+        "runtime": {
+          "TextDifficultyDeterminer.Infrastructure.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "TextDifficultyDeterminer.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "TextDifficultyDeterminer.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "TextDifficultyDeterminer.Infrastructure/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

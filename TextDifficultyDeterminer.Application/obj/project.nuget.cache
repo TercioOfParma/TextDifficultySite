@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "GHtDBsqVdkKyGk0PxTqBla2LocNQzAROwx067PlLWv+QfxQrcOzgHwBdQLZDts6u4UxF8DidW6rjed4kG0Y0PA==",
+  "dgSpecHash": "Y97kD6RW85/JCrqa0pIOZoFeYP9dSBooiKK3MzxrMg4K+dazsKiQEn0kuoyldxPKF2045AHggVNkBVwuWX9Syg==",
   "success": true,
   "projectFilePath": "/home/elliot/Documents/TextDifficultyDeterminer/TextDifficultyDeterminer.Application/TextDifficultyDeterminer.Application.csproj",
   "expectedPackageFiles": [],
