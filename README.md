@@ -14,13 +14,16 @@
 - Take in a text from a text file and test
 - .docx and .pdf? 
 - .epub?
+- Upload a Zip file with a bunch of .txt files in them, and then evaluate the difficulties of each text file relative to the others
+    - Generate word frequency table
+    - Count the words within each file and generate an aggregate score
+    - Calculate according to the algorithm 
 
 # Difficulty Test Algorithm 
 Category:
     - Count words by occurence and by percentage
         - Occurence goes by jumps described by Kazakov
         - Percentage goes by 1% from 87% up
-    
 
 Overall Score:
 	Score = (Overall Difficulty of All Words / Word Count) * Sentence Length
