@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="../buildMultiTargeting/TextDifficultyDeterminer.Website.props" />
-</Project>
