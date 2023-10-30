@@ -21,7 +21,7 @@ class TextFileToTextContainerHandler : IRequestHandler<TextFileToTextContainerCo
     {
         Console.WriteLine(request.File.FileName);
         var reader = new StreamReader(request.File.OpenReadStream());
-        string textForFile = reader.ReadToEnd();
+        var textForFile = reader.ReadToEnd();
 
         Console.WriteLine(textForFile);
         return new TextContainerFile(textForFile);
