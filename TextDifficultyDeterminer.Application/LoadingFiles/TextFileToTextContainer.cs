@@ -23,7 +23,6 @@ class TextFileToTextContainerHandler : IRequestHandler<TextFileToTextContainerCo
         var reader = new StreamReader(request.File.OpenReadStream());
         var textForFile = reader.ReadToEnd();
 
-        Console.WriteLine(textForFile);
         return new TextContainerFile(textForFile);
     }
 }
