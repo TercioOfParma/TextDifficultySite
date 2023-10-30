@@ -6,8 +6,9 @@
 
 <EditForm Model="TestCorpusUploadDto">
     <div class="row">
-        <h5>Please upload a Zip file with the Corpus here</h5>
-        <InputFile class="form-control" OnChange="LoadZipFile"> </InputFile>
+        <h5>Please upload the Text files for the Corpus here</h5>
+        <RadzenUpload @ref="Upload" Auto="false" Multiple="true" Url="http://localhost:5128/api/LoadCorpus"></RadzenUpload>
+        <RadzenButton Text="Upload" Click="@( () => Upload.Upload())"></RadzenButton>
     </div>
 </EditForm>
 

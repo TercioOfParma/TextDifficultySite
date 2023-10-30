@@ -1,10 +1,10 @@
 
-public class ZipContainerFile 
+public class TextContainerFile 
 {
     public string FileContents {get; set;}
     public FrequencyDictionary FrequencyDictionaryForThisFile {get; set;}
 
-    public ZipContainerFile(string fileContents)
+    public TextContainerFile(string fileContents)
     {
         FileContents =  new string(fileContents.Select(c => char.IsPunctuation(c) ? ' ' : c).ToArray());
         GenerateFrequencyDictionary(); 
