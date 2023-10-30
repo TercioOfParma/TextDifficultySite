@@ -25,13 +25,9 @@ namespace TextDifficultyDeterminer.Website.Controllers
             {
                 if(file.ContentType != "text/plain")
                     continue;
-                    
-                Console.WriteLine(file.FileName);
-                var reader = new StreamReader(file.OpenReadStream());
-                string textForFile = reader.ReadToEnd();
 
-                Console.WriteLine(textForFile);
-                container.Add(new TextContainerFile(textForFile));
+                var converted = await Mediator.Send(new TextFileToTextContainerCommand { File = file});
+                container.Add(converted);
             }
             return Ok("Skull Emoji");
 
