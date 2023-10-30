@@ -1,0 +1,8 @@
+/TextDifficultyDeterminer.Website/bin/*
+/TextDifficultyDeterminer.Website/obj/*
+/TextDifficultyDeterminer.Infrastructure/bin/*
+/TextDifficultyDeterminer.Infrastructure/obj/*
+/TextDifficultyDeterminer.Domain/bin/*
+/TextDifficultyDeterminer.Domain/obj/*
+/TextDifficultyDeterminer.Application/bin/*
+/TextDifficultyDeterminer.Application/obj/*
