@@ -3,7 +3,16 @@
 1) Write out data structures for holding the following information:
     - Logging Information for a word in the frequency dictionary
     - A container for the frequency dictionary for the Zip File
-    - A container for the word information within a file 
+    - A container for the word information within a file (I think I'll just use FrequencyDictionary)
+    - A Container for a Zip Request's information
+
+2) Produce a web page from which a Zip file is uploaded
+3) Have an application layer function handle translation of the files into strings
+4) Generate Frequency Dictionaries for Each file
+5) Concat these together to form an overall Frequency Dictionary 
+6) Calculate Relative Difficulty Scores for Each file and output this to an Excel Sheet 
+
+
 
 # Does the Word Information Model need to contain a rank, or should it be generated on the fly?
 
