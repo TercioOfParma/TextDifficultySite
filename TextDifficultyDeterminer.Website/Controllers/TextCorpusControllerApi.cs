@@ -30,6 +30,10 @@ namespace TextDifficultyDeterminer.Website.Controllers
                 containerList.Add(converted);
             }
             var container = new TextContainer(containerList);
+            foreach(var word in container.ConcatDictionary.Words)
+            {
+                Console.WriteLine($"{word.Word} : {word.FrequencyOfWord}");
+            }
             return Ok("Skull Emoji");
 
         }

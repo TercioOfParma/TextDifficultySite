@@ -6,10 +6,8 @@ public class TextContainerFile
 
     public TextContainerFile(string fileContents)
     {
-        FileContents =  new string(fileContents.Select(c => char.IsPunctuation(c) || c == '\n' || c == '\r' ? ' ' : c).ToArray());
-        Console.WriteLine("Generating Frequencies!");
+        FileContents =  new string(fileContents.Select(c => char.IsPunctuation(c) || char.IsWhiteSpace(c) ? ' ' : c).ToArray());
         GenerateFrequencyDictionary(); 
-        OutputInformation();
     }
 
     public void OutputInformation()
@@ -26,8 +24,11 @@ public class TextContainerFile
         while(toLoop.Count != 0)
         {
             var word = toLoop.FirstOrDefault();
-            ulong numberInstances = Convert.ToUInt64(toLoop.Where(x => string.Equals(x, word)).ToList().Count);
-            wordList.Add(new FrequencyWord(word, 1, numberInstances));
+            if(word.Length != 0)
+            {
+                ulong numberInstances = Convert.ToUInt64(toLoop.Where(x => string.Equals(x, word)).ToList().Count);
+                wordList.Add(new FrequencyWord(word, 1, numberInstances));
+            }
             toLoop.RemoveAll(x => x == word);
             Console.WriteLine($"{toLoop.Count}");
         }
