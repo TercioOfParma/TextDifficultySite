@@ -1,18 +1,25 @@
 # Initial Zip to CSV steps
 
-1) Write out data structures for holding the following information:
-    - Logging Information for a word in the frequency dictionary
-    - A container for the frequency dictionary for the Zip File
-    - A container for the word information within a file (I think I'll just use FrequencyDictionary)
-    - A Container for a Zip Request's information
+1) Write out data structures for holding the following information: X
+    - Logging Information for a word in the frequency dictionary X
+    - A container for the frequency dictionary for the Zip File X
+    - A container for the word information within a file (I think I'll just use FrequencyDictionary) X
+    - A Container for a Zip Request's information X
 
-2) Produce a web page from which a Zip file is uploaded
+2) Produce a web page from which a Zip file is uploaded X **Change this to a Web Controller that handles multiple files**
 3) Have an application layer function handle translation of the files into strings
 4) Generate Frequency Dictionaries for Each file
 5) Concat these together to form an overall Frequency Dictionary 
 6) Calculate Relative Difficulty Scores for Each file and output this to an Excel Sheet 
 
+# Handling ZIP files or an alternative upload form for a corpus of texts?
+Zips are kind of unsafe, and I want to avoid having to save any files to the server itself, so how does one group these files together?
 
+I could simply use the multiple file upload component from Radzen, but that defaults to using a Web API endpoint, so that would require a bit of reworking inside of the website (I think that I can have a Web API endpoint inside of a Blazor Website, but it might take some mucking around with the right cookies being sent).
+
+Alternatively, we could just go the Zip -> Unzip on Server -> Delete files route. I think this would be a lot more of a pain than simply having a Multiple Radzen upload, since with the RadzenUpload I could simply throw all of the files at the endpoint at once. 
+
+I think that the former is much easier 
 
 # Does the Word Information Model need to contain a rank, or should it be generated on the fly?
 
