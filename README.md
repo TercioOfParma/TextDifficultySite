@@ -27,3 +27,10 @@ Category:
 
 Overall Score:
 	Score = (Overall Difficulty of All Words / Word Count) * Sentence Length
+Have considered doing something more interesting with Euclidean Distance, which could indicate a magnitude of difference from an "Average Text", but this seems useless. However, this could be a very useful feature for judging relative difficulties between texts (Say, comparing the Book of Romans to 
+the Gospel of Matthew)
+
+# Stretch Goals
+- Euclidean Distance esque algorithm to indicate relative difference and difficulties of texts with Vectors (In fact, I think this may be superior 
+to simply having a )
+- Using Euclidean Distance to cluster texts in a corpus 
