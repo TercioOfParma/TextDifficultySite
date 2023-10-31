@@ -6,10 +6,10 @@
     - A container for the word information within a file (I think I'll just use FrequencyDictionary) X
     - A Container for a Zip Request's information X
 
-2) Produce a web page from which a Zip file is uploaded X **Change this to a Web Controller that handles multiple files**
-3) Have an application layer function handle translation of the files into strings
-4) Generate Frequency Dictionaries for Each file
-5) Concat these together to form an overall Frequency Dictionary 
+2) Produce a web page from which a Zip file is uploaded X **Change this to a Web Controller that handles multiple files** X
+3) Have an application layer function handle translation of the files into strings X
+4) Generate Frequency Dictionaries for Each fileX
+5) Concat these together to form an overall Frequency Dictionary X  
 6) Calculate Relative Difficulty Scores for Each file and output this to an Excel Sheet 
 
 # Handling ZIP files or an alternative upload form for a corpus of texts?
