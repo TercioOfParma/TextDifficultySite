@@ -6,7 +6,7 @@ public class FrequencyWord
     public int Language {get; set;}
     public string Word {get; set;}
     public ulong FrequencyOfWord {get; set;}
-    public long Rank {get; set;}
+    public double DifficultyScore {get; set;}
 
     public FrequencyWord(string word, int language, ulong frequencyOfWord)
     {

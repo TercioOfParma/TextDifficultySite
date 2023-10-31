@@ -42,3 +42,45 @@ BUT, this is could be a very useful way of determining what texts are worth read
 
 However, the really serious problem is that relative distances would never be constant if the frequency of the words is always changing. Therefore, I'll keep Rank inside of the FrequencyWord Class
 
+# Determining Relative Difficulty of a Text
+
+Looking through an older version of this algorithm I wrote earlier this year, I've found that the difficulty is founded simply on the rank of the word in a frequency dictionary, as mentioned earlier. I don't think this makes much sense in retrospect, because then this would mean that "and" and "or" would have significantly different difficulties.
+
+I'm tempted to use some sort of generated score based on how many words of unprocessed text that it would take to learn said word, and therefore scaffold, perhaps something like:
+
+Difficulty of Word = Log(x)(Average Words Taken To Encounter a Word 12 times (Paul Nation's "Magic" Number))
+
+x being the base. 
+
+I bet there's some sort of logarithmic relationship between the word counts presented by [Kazakov](https://www.academia.edu/49862484/How_much_input_do_we_need_to_learn_a_language) 
+
+There isn't.
+
+Perhaps it's better to draw lines between certain numbers of words consumed and difficulty?
+
+Beginner 1: 250k 1
+Beginner 2: 500k 2
+Intermediate 1: 1M (B1 for Kazakhov) 3 
+Intermediate 2: 2M 4
+Advanced 1: 4M (Upper end of where JustinLearnsLatin made French read fluently) 5
+Advanced 2: 8M 
+
+This seems to be kinda similar to Kazakhov's in some way. This is based on hearsay and I wish that the Polyglots would get together and get more data on this so that I could make a better division. 
+
+Difficulty Score of Word = log(2)(Score / 125,000)
+
+# Is this a classification problem?
+
+The overwhelming majority of any text will be easier words. So what even is difficulty?
+
+The difficulty score should be related to the level required for 95% coverage, for realistic reading, and 98% for extensive reading. 
+
+What we are answering is, how many words should I have read of indiscriminate text to be able to comprehend this?
+
+This should be solved by the following
+
+1) Grab the words and the number of words from a text
+2) Map the difficulty score calculated above from the presaved text corpus
+3) Rank the words in order of the difficulty score from the text corpus
+4) Take the word at the 95% and 98% line
+5) Reverse log these numbers to get the number of words to be read
