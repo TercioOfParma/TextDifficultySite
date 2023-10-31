@@ -19,18 +19,25 @@
     - Count the words within each file and generate an aggregate score
     - Calculate according to the algorithm 
 
-# Difficulty Test Algorithm 
-Category:
-    - Count words by occurence and by percentage
-        - Occurence goes by jumps described by Kazakov
-        - Percentage goes by 1% from 87% up
-
-Overall Score:
-	Score = (Overall Difficulty of All Words / Word Count) * Sentence Length
-Have considered doing something more interesting with Euclidean Distance, which could indicate a magnitude of difference from an "Average Text", but this seems useless. However, this could be a very useful feature for judging relative difficulties between texts (Say, comparing the Book of Romans to 
-the Gospel of Matthew)
+# Difficulty Test Algorithm
+Scoring currently works as follows:
+    - Difficulty of a Word:
+        Difficulty = log2( ( Overall Words Logged by Dictionary Corpus / Occurences of Word in Corpus) * 12 ) / 125,000)
+        - 12 is the number of times a word needs to be read to be memorised generally, 125,000 is a number used to crunch numbers down for smaller difficulty scores within a preplanned scale below
+    - To regenerate the threshold, you do the following:
+        Threshold = 2^Score * 125,000
 
 # Stretch Goals
 - Euclidean Distance esque algorithm to indicate relative difference and difficulties of texts with Vectors (In fact, I think this may be superior 
 to simply having a )
 - Using Euclidean Distance to cluster texts in a corpus 
+
+# Scales of Difficulty
+This scale indicates how much undifferentiated text a reader would need to read in order to encounter the given word 12 times and their corresponding scoring:
+
+Beginner 1: 250k 1
+Beginner 2: 500k 2
+Intermediate 1: 1M (B1 for Kazakhov) 3 
+Intermediate 2: 2M 4
+Advanced 1: 4M (Upper end of where JustinLearnsLatin made French read fluently) 5
+Advanced 2: 8M 
