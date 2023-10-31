@@ -18,6 +18,7 @@ public class TextContainer
         foreach(var dict in dicts)
             overallFreq.ApplyFrequencyWords(dict.Words);
 
+        overallFreq.CalculateDifficultyScores();
         return overallFreq;
     }
 }

@@ -67,7 +67,14 @@ Advanced 2: 8M
 
 This seems to be kinda similar to Kazakhov's in some way. This is based on hearsay and I wish that the Polyglots would get together and get more data on this so that I could make a better division. 
 
-Difficulty Score of Word = log(2)(Score / 125,000)
+Difficulty Score of Word = log(2)(Score / 125,000) Note from later: It't can't be score, it has to be the number of words to read to 
+get twelve repeats of a word 
+
+Score = (Repeats / Dictionary Size)  * 12
+
+Therefore the Final Score should be :
+
+Threshold = 2^Score * 125,0000
 
 # Is this a classification problem?
 
@@ -79,8 +86,8 @@ What we are answering is, how many words should I have read of indiscriminate te
 
 This should be solved by the following
 
-1) Grab the words and the number of words from a text
-2) Map the difficulty score calculated above from the presaved text corpus
-3) Rank the words in order of the difficulty score from the text corpus
-4) Take the word at the 95% and 98% line
-5) Reverse log these numbers to get the number of words to be read
+1) Grab the words and the number of words from a text X
+2) Map the difficulty score calculated above from the presaved text corpus X
+3) Rank the words in order of the difficulty score from the text corpus X
+4) Take the word at the 95% and 98% line X
+5) Reverse log these numbers to get the number of words to be read X

@@ -1,15 +1,19 @@
 
 public class TextContainerFile 
 {
+    public string Name {get; set;}
     public string FileContents {get; set;}
     public FrequencyDictionary FrequencyDictionaryForThisFile {get; set;}
+    public TextScores Scores {get; set;}
 
-    public TextContainerFile(string fileContents)
+    public TextContainerFile(string name, string fileContents)
     {
+        Name = name;
         FileContents =  new string(fileContents.Select(c => char.IsPunctuation(c) || char.IsWhiteSpace(c) ? ' ' : c).ToArray());
         GenerateFrequencyDictionary(); 
     }
 
+    public void GenerateScore(FrequencyDictionary toRankAgainst) => Scores = DifficultyEvaluatorService.GenerateScore(Name, FileContents, toRankAgainst);
     public void OutputInformation()
     {
         foreach(var word in FrequencyDictionaryForThisFile.Words)
@@ -30,7 +34,6 @@ public class TextContainerFile
                 wordList.Add(new FrequencyWord(word, 1, numberInstances));
             }
             toLoop.RemoveAll(x => x == word);
-            Console.WriteLine($"{toLoop.Count}");
         }
         FrequencyDictionaryForThisFile = new(wordList);
 
