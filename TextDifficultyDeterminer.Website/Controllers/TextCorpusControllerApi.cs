@@ -1,5 +1,14 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Text.Json;
+using System.Text;
+
 
 namespace TextDifficultyDeterminer.Website.Controllers 
 {
@@ -17,7 +26,7 @@ namespace TextDifficultyDeterminer.Website.Controllers
         }
 
         [HttpPost("LoadCorpus")]
-        public async Task<ActionResult> LoadFiles(IList<IFormFile> files)
+        public async Task<IActionResult> LoadFiles(IList<IFormFile> files)
         {
             Console.WriteLine("PING");
             var containerList = new List<TextContainerFile>();
@@ -35,8 +44,9 @@ namespace TextDifficultyDeterminer.Website.Controllers
                 file.GenerateScore(container.ConcatDictionary);
                 Console.WriteLine($"{file.Name} : {file.Scores.RealisticReadingThreshold}");
             }
-            return Ok("Skull Emoji");
 
+            var contString = JsonSerializer.Serialize(container);
+            return Ok(contString);
         }
 
     }

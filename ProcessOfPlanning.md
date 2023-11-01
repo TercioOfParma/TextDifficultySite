@@ -99,3 +99,9 @@ This should be solved by the following
 3) Rank the words in order of the difficulty score from the text corpus X
 4) Take the word at the 95% and 98% line X
 5) Reverse log these numbers to get the number of words to be read X
+
+
+
+# How to fix the issue of content not sending
+
+HttpResponseMessage doesn't work for sending mass content. You have to use IActionResult, as that will send to the RadzenUpload the content that you want, then deserialise the RawResponse with JsonSerializer into the object, as you will see in TestCorpusBase

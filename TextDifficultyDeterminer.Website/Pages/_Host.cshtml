@@ -12,6 +12,19 @@
     <link rel="stylesheet" href="_content/Radzen.Blazor/css/software-base.css">
     <link href="css/site.css" rel="stylesheet" />
     <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
+    <script>
+    window.downloadFileFromStream = async (fileName, contentStreamReference) => {
+        const arrayBuffer = await contentStreamReference.arrayBuffer();
+        const blob = new Blob([arrayBuffer]);
+        const url = URL.createObjectURL(blob);
+        const anchorElement = document.createElement('a');
+        anchorElement.href = url;
+        anchorElement.download = fileName ?? '';
+        anchorElement.click();
+        anchorElement.remove();
+        URL.revokeObjectURL(url);
+        }
+    </script>
 </head>
 <body>
     <component type="typeof(App)" render-mode="ServerPrerendered" />

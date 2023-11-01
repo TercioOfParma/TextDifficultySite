@@ -9,6 +9,10 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddApplicationServices();
 builder.Services.AddControllers();
+builder.Services.AddServerSideBlazor().AddHubOptions(o =>
+{
+     o.MaximumReceiveMessageSize = 10 * 1024 * 1024;
+});
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
