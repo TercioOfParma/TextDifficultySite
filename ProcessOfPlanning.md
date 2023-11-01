@@ -70,6 +70,14 @@ This seems to be kinda similar to Kazakhov's in some way. This is based on hears
 Difficulty Score of Word = log(2)(Score / 125,000) Note from later: It't can't be score, it has to be the number of words to read to 
 get twelve repeats of a word 
 
+So this could be log(2)(32) = 5 
+
+Lets say score is 64000000, so that means that it will be log(2)(512) = 9
+
+2^5 
+
+Threshold = 2^9 * 125,000 = 
+
 Score = (Repeats / Dictionary Size)  * 12
 
 Therefore the Final Score should be :
