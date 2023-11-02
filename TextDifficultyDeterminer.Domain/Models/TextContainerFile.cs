@@ -26,17 +26,20 @@ public class TextContainerFile
     {
         var toLoop = new List<string>(FileContents.ToLower().Split(" "));
         var wordList = new List<FrequencyWord>();
+        ulong checkInstancesLength = 0;
         while(toLoop.Count != 0)
         {
             var word = toLoop.FirstOrDefault();
             if(word.Length != 0)
             {
                 ulong numberInstances = Convert.ToUInt64(toLoop.Where(x => string.Equals(x, word)).ToList().Count);
+                checkInstancesLength += numberInstances;
                 wordList.Add(new FrequencyWord(word, 1, numberInstances));
             }
-            toLoop.RemoveAll(x => x == word);
+            toLoop.RemoveAll(x => string.Equals(x, word));
         }
         FrequencyDictionaryForThisFile = new(wordList);
+        Console.WriteLine($"In GenerateFrequencyDictionary Instances Length: {checkInstancesLength} Overall Word Count {FrequencyDictionaryForThisFile.OverallWordCount}");
 
     }
 }

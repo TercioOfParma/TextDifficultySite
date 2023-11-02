@@ -46,6 +46,7 @@ namespace TextDifficultyDeterminer.Website.Controllers
             }
 
             var contString = JsonSerializer.Serialize(container);
+            Console.WriteLine("Sending Container");
             return Ok(contString);
         }
 

@@ -105,3 +105,10 @@ This should be solved by the following
 # How to fix the issue of content not sending
 
 HttpResponseMessage doesn't work for sending mass content. You have to use IActionResult, as that will send to the RadzenUpload the content that you want, then deserialise the RawResponse with JsonSerializer into the object, as you will see in TestCorpusBase
+
+
+# Weird issue with the Frequency Dictionaries contradicting each other in terms of word count
+
+Overall Word Count seems to be correct based on previous information, which leaves the frequency calculations to be incorrect.
+
+These are usually bigger

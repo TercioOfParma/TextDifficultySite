@@ -13,21 +13,21 @@ public class FrequencyDictionary
     public void CalculateDifficultyScores()
     {
         foreach(var word in Words)
-        {
-            Console.WriteLine($"{word.Word} : {Math.Log(Convert.ToDouble((OverallWordCount / word.FrequencyOfWord) * 12) / DifficultyEvaluatorService.READING_LEVEL_FACTOR, 2.0d)}");
             word.DifficultyScore = Math.Log(Convert.ToDouble((OverallWordCount / word.FrequencyOfWord) * 12) / DifficultyEvaluatorService.READING_LEVEL_FACTOR, 2.0d); //Log 
-        }
     }
     public void ApplyFrequencyWords(List<FrequencyWord> words)
     {
-        foreach(var word in words)
+        var toIterate = words.ConvertAll(x => new FrequencyWord(x.Word, x.Language, x.FrequencyOfWord));
+        while(toIterate.Count != 0)
         {
+            var word = toIterate.First();
             var toChange = Words.FirstOrDefault(x => x.Word == word.Word);
             if(toChange == null)
                 Words.Add(word);
             else 
                 toChange.FrequencyOfWord += word.FrequencyOfWord;
             OverallWordCount += word.FrequencyOfWord;
+            toIterate.RemoveAll(x => string.Equals(x.Word, word.Word));
         }
 
     }
