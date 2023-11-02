@@ -23,8 +23,10 @@ namespace TextDifficultyDeterminer.Website.TestCorpus
             Console.WriteLine($"Handling Response! {e.JsonResponse.ToString()}");
             var container = JsonSerializer.Deserialize<TextContainer>(e.RawResponse);
             var excelFile = await Mediator.Send(new TextContainerToExcelCommand { Files = container});
+            
             var stream = new MemoryStream();
             excelFile.SaveAs(stream);
+            stream.Position = 0;
             using var streamRef = new DotNetStreamReference(stream: stream);
 
             await JS.InvokeVoidAsync("downloadFileFromStream", "Test.xlsx", streamRef);
