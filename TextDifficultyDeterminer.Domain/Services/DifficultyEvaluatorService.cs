@@ -29,8 +29,13 @@ public class DifficultyEvaluatorService
         }
 
         wordList = wordList.OrderBy(x => x.DifficultyScore).ToList();
-        int realisticIndex = Convert.ToInt32((wordList.Count - 1) * REALISTIC_READING_THRESHOLD);
-        int extensiveIndex = Convert.ToInt32((wordList.Count - 1) * EXTENSIVE_READING_THRESHOLD);
+
+        ulong realisticThreshold = Convert.ToUInt64(Math.Round(wordCount * REALISTIC_READING_THRESHOLD));
+        ulong extensiveThreshold = Convert.ToUInt64(Math.Round(wordCount * EXTENSIVE_READING_THRESHOLD));
+
+
+        int realisticIndex = FindIndexForThreshold(realisticThreshold, wordList);
+        int extensiveIndex = FindIndexForThreshold(extensiveThreshold, wordList);
         score.Name = name; 
         score.UniqueWords = uniqueWords;
         score.WordCount = wordCount; 
@@ -38,6 +43,21 @@ public class DifficultyEvaluatorService
         score.ExtendedReadingThreshold = Convert.ToInt32(Math.Pow(2.0, wordList.ElementAt(extensiveIndex).DifficultyScore) * READING_LEVEL_FACTOR); 
         Console.WriteLine($"{name} Difficulty Score generated!");
         return score; 
+    }
+
+    public static int FindIndexForThreshold(ulong threshold, List<FrequencyWord> words)
+    {
+        ulong wordCountIterator = 0;
+        int i = 0;
+        foreach(var word in words)
+        {
+            if(wordCountIterator > threshold)
+                break;
+            
+            wordCountIterator += word.FrequencyOfWord;
+            i++;
+        }
+        return i;
     }
 
 }
