@@ -26,6 +26,10 @@ class TextContainerToExcelHandler : IRequestHandler<TextContainerToExcelCommand,
 
         concatDictionary.Cell(4,1).InsertData(new List<string> {"Frequency Word ID", "Language", "Word", "Frequency", "DifficultyScore"}, transpose : true);
         concatDictionary.Cell(5,1).InsertData(request.Container.ConcatDictionary.Words.OrderByDescending(x => x.FrequencyOfWord).ToList());
+        
+        var textScoresForFiles = request.Container.Files.Select(x => x.Scores).OrderBy(x => x.RealisticReadingThreshold).ToList();
+        concatDictionary.Cell(4,7).InsertData(new List<string> {"Name", "Realistic Reading Threshold", "Extensive Reading Threshold", "Word Count", "Unique Words"}, transpose: true);
+        concatDictionary.Cell(5,7).InsertData(textScoresForFiles);
         foreach(var file in request.Container.Files)
         {
             GenerateXLWorksheetOutput(workbook, file);
