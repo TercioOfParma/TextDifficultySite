@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using ClosedXML.Excel;
 public class TextContainerToExcelCommand : IRequest<XLWorkbook>
 {
-    public TextContainer Files {get; set;}
+    public TextContainer Container {get; set;}
 }
 
 public class TextContainerToExcelValidator : AbstractValidator<TextContainerToExcelCommand>
@@ -20,10 +20,24 @@ class TextContainerToExcelHandler : IRequestHandler<TextContainerToExcelCommand,
     async Task<XLWorkbook> IRequestHandler<TextContainerToExcelCommand, XLWorkbook>.Handle(TextContainerToExcelCommand request, CancellationToken cancellationToken)
     {
         var workbook = new XLWorkbook();
-        var worksheet = workbook.AddWorksheet("Sample Sheet");
-        worksheet.Cell("A1").Value = "Hello World!";
-        worksheet.Cell("A2").FormulaA1 = "MID(A1, 7, 5)";
+        foreach(var file in request.Container.Files)
+        {
+            GenerateXLWorksheetOutput(workbook, file);
+        }
 
         return workbook;
+    }
+
+    private void GenerateXLWorksheetOutput(XLWorkbook workbook, TextContainerFile file)
+    {
+        var worksheet = workbook.AddWorksheet(file.Name);
+
+        worksheet.Cell(1,1).InsertData(new List<string>{"Name"});
+        worksheet.Cell(1,2).InsertData(new List<string>{file.Name});
+        worksheet.Cell(4,1).InsertData(new List<string> {"Frequency Word ID", "Language", "Word", "Frequency", "DifficultyScore"}, transpose : true);
+        worksheet.Cell(5,1).InsertData(file.FrequencyDictionaryForThisFile.Words.OrderByDescending(x => x.FrequencyOfWord).ToList());
+
+        worksheet.Cell(4,7).InsertData(new List<string> {"Name", "Realistic Reading Threshold", "Extensive Reading Threshold", "Word Count", "Unique Words"}, transpose: true);
+        worksheet.Cell(5,7).InsertData(new List<TextScores> {file.Scores });
     }
 }

@@ -21,6 +21,7 @@ public class TextContainerFile
             Console.WriteLine(word.Word + " : " + word.FrequencyOfWord);
         }
     }
+
     private void GenerateFrequencyDictionary()
     {
         var toLoop = new List<string>(FileContents.ToLower().Split(" "));

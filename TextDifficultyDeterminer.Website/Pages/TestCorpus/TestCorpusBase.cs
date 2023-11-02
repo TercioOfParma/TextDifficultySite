@@ -22,7 +22,7 @@ namespace TextDifficultyDeterminer.Website.TestCorpus
         {
             Console.WriteLine($"Handling Response! {e.JsonResponse.ToString()}");
             var container = JsonSerializer.Deserialize<TextContainer>(e.RawResponse);
-            var excelFile = await Mediator.Send(new TextContainerToExcelCommand { Files = container});
+            var excelFile = await Mediator.Send(new TextContainerToExcelCommand { Container = container});
             
             var stream = new MemoryStream();
             excelFile.SaveAs(stream);
