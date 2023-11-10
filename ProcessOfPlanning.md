@@ -112,3 +112,13 @@ HttpResponseMessage doesn't work for sending mass content. You have to use IActi
 Overall Word Count seems to be correct based on previous information, which leaves the frequency calculations to be incorrect.
 
 These are usually bigger
+
+
+# Todo 10th November 2023
+
+1) Set up Database with Language and Word Tables, with the "Language" variable in Word as a foreign key for Language
+2) Provide Functionality for Adding Words and Languages to the Database 
+3) Provide Functionality for Adding Words from a Text to a Preexisting text
+4) Offer this as a Web API
+5) Provide some sort of way of preventing the spamming of text (Hash Keys?)
+

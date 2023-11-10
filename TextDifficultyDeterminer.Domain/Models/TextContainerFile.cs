@@ -34,7 +34,7 @@ public class TextContainerFile
             {
                 ulong numberInstances = Convert.ToUInt64(toLoop.Where(x => string.Equals(x, word)).ToList().Count);
                 checkInstancesLength += numberInstances;
-                wordList.Add(new FrequencyWord(word, 1, numberInstances));
+                wordList.Add(new FrequencyWord(word, Guid.NewGuid(), numberInstances));
             }
             toLoop.RemoveAll(x => string.Equals(x, word));
         }
