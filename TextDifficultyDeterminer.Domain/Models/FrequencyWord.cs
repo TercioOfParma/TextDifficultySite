@@ -8,6 +8,10 @@ public class FrequencyWord
     public ulong FrequencyOfWord {get; set;}
     public double DifficultyScore {get; set;}
 
+    public FrequencyWord()
+    {
+        
+    }
     public FrequencyWord(string word, Guid language, ulong frequencyOfWord)
     {
         Word = word;
