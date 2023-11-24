@@ -6,8 +6,11 @@
 
 <EditForm Model="TestCorpusUploadDto">
     <div class="row">
-        <RadzenDropDown @bind-Value="LanguageId" Data="LanguageList" TextProperty="LanguageName" ValueProperty="Id">
-        </RadzenDropDown>
+        @if(LanguageList != null)
+        {
+            <RadzenDropDown @bind-Value="LanguageId" Data="LanguageList" TextProperty="LanguageName" ValueProperty="Id">
+            </RadzenDropDown>
+        }
     </div>
     <div class="row">
         <h5>Please upload the Text files for the Corpus here</h5>
