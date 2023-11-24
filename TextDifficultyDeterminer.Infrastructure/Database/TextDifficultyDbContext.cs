@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 
 
-public class TextDifficultyDbContext : DbContext 
+public class TextDifficultyDbContext : DbContext, IUnitOfWork
 {
     public DbSet<FrequencyWord> Words {get; set;}
     public DbSet<Language> Languages {get; set;}

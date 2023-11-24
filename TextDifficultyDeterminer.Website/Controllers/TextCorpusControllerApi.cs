@@ -24,8 +24,15 @@ namespace TextDifficultyDeterminer.Website.Controllers
             Mediator = mediator;
             WebHostEnvironment = webHostEnvironment;
         }
+        [HttpPost("LoadCorpus/{LanguageId}")]
+        public async Task<IActionResult> LoadFilesIntoDatabase(Guid LanguageId, IList<IFormFile> files)
+        {
+            Console.WriteLine("PING");
 
-        [HttpPost("LoadCorpus")]
+            return Ok();
+        }
+
+        [HttpPost("LoadTestCorpus")]
         public async Task<IActionResult> LoadFiles(IList<IFormFile> files)
         {
             Console.WriteLine("PING");

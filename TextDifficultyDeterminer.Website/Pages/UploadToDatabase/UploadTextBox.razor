@@ -1,0 +1,20 @@
+@using TextDifficultyDeterminer.Website.UploadToDatabase
+
+@inherits UploadTextBoxBase;
+
+@page "/TestLoadCorpus"
+
+<EditForm Model="TestCorpusUploadDto">
+    <div class="row">
+        <RadzenDropDown @bind-Value="LanguageId" Data="LanguageList" TextProperty="LanguageName" ValueProperty="Id">
+        </RadzenDropDown>
+    </div>
+    <div class="row">
+        <h5>Please upload the Text files for the Corpus here</h5>
+        <RadzenUpload @ref="Upload" Auto="false" Multiple="true" Url=@($"http://localhost:5128/api/LoadCorpus/{LanguageId}")></RadzenUpload>
+        <RadzenButton Text="Upload" Click="@( () => Upload.Upload())"></RadzenButton>
+    </div>
+</EditForm>
+<div class="row">
+    <RadzenText class="text-danger" Text="Error! Incorrect File format!"></RadzenText>
+</div>
