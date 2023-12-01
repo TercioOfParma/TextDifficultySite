@@ -19,7 +19,6 @@ class TextFileToTextContainerHandler : IRequestHandler<TextFileToTextContainerCo
 {
     async Task<TextContainerFile> IRequestHandler<TextFileToTextContainerCommand, TextContainerFile>.Handle(TextFileToTextContainerCommand request, CancellationToken cancellationToken)
     {
-        Console.WriteLine(request.File.FileName);
         var reader = new StreamReader(request.File.OpenReadStream());
         var textForFile = reader.ReadToEnd();
 

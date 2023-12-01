@@ -28,7 +28,13 @@ namespace TextDifficultyDeterminer.Website.Controllers
         public async Task<IActionResult> LoadFilesIntoDatabase(Guid LanguageId, IList<IFormFile> files)
         {
             Console.WriteLine("PING");
+            foreach(var file in files)
+            {
+                if(file.ContentType != "text/plain")
+                    continue;
 
+                var converted = await Mediator.Send(new LoadFileIntoDatabaseCommand { File = file, LanguageId = LanguageId});
+            }
             return Ok();
         }
 

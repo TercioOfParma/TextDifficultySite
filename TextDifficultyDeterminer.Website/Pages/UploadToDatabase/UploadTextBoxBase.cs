@@ -10,11 +10,18 @@ namespace TextDifficultyDeterminer.Website.UploadToDatabase
         public Guid LanguageId {get; set;}
         public List<Language> LanguageList {get; set;}
         public RadzenUpload Upload {get;set;} = new();
+        public bool IsUploaded {get; set;} = false;
 
         protected async override Task OnInitializedAsync()
         {
             var languages = await Mediator.Send(new GetLanguagesQuery {} );
             LanguageList = languages.LanguageList;
+        }
+
+        protected async Task HandleResponseUploadToDatabase(UploadCompleteEventArgs e)
+        {
+            Console.WriteLine("DONE!");
+            IsUploaded = true;
         }
     }
 }

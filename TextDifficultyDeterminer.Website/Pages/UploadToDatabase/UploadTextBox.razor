@@ -1,5 +1,5 @@
 @using TextDifficultyDeterminer.Website.UploadToDatabase
-
+@using Radzen.Blazor;
 @inherits UploadTextBoxBase;
 
 @page "/TestLoadCorpus"
@@ -14,10 +14,16 @@
     </div>
     <div class="row">
         <h5>Please upload the Text files for saving to the Database Corpus here</h5>
-        <RadzenUpload @ref="Upload" Auto="false" Multiple="true" Url=@($"http://localhost:5128/api/LoadCorpus/{LanguageId}")></RadzenUpload>
+        <RadzenUpload @ref="Upload" Auto="false" Multiple="true" Url=@($"http://localhost:5128/api/LoadCorpus/{LanguageId}") Complete="async (args) => await HandleResponseUploadToDatabase(args)"></RadzenUpload>
         <RadzenButton Text="Upload" Click="@( () => Upload.Upload())"></RadzenButton>
     </div>
 </EditForm>
+@if(IsUploaded)
+{
+    <div class="row">
+        <RadzenText class="text-success" Text="Uploaded to Database!"></RadzenText>
+    </div>
+}
 <div class="row">
     <RadzenText class="text-danger" Text="Error! Incorrect File format!"></RadzenText>
 </div>
