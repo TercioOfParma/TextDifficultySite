@@ -13,7 +13,7 @@
         }
     </div>
     <div class="row">
-        <h5>Please upload the Text files for the Corpus here</h5>
+        <h5>Please upload the Text files for saving to the Database Corpus here</h5>
         <RadzenUpload @ref="Upload" Auto="false" Multiple="true" Url=@($"http://localhost:5128/api/LoadCorpus/{LanguageId}")></RadzenUpload>
         <RadzenButton Text="Upload" Click="@( () => Upload.Upload())"></RadzenButton>
     </div>
