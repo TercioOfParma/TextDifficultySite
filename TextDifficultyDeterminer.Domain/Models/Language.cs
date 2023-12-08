@@ -5,7 +5,7 @@ public class Language
 
     public Language()
     {
-        
+        Id = Guid.NewGuid();
     }
     public Language(string name)
     {
