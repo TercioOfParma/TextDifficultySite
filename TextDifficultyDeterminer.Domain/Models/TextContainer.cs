@@ -5,6 +5,11 @@ public class TextContainer
     
     public List<TextContainerFile> Files {get; set;}
     public FrequencyDictionary ConcatDictionary {get; set;}
+    public TextContainer(List<TextContainerFile> files, FrequencyDictionary dict)
+    {
+        Files = files;
+        ConcatDictionary = dict;
+    }
     public TextContainer(List<TextContainerFile> files)
     {
         Files = files;

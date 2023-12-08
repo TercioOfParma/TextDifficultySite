@@ -37,6 +37,31 @@ namespace TextDifficultyDeterminer.Website.Controllers
             }
             return Ok();
         }
+        [HttpPost("TestText/{LanguageId}")]
+        public async Task<IActionResult> CheckFilesAgainstDatabase(Guid LanguageId, IList<IFormFile> files)
+        {
+            var containerList = new List<TextContainerFile>();
+            foreach(var file in files)
+            {
+                if(file.ContentType != "text/plain")
+                    continue;
+
+                var converted = await Mediator.Send(new TextFileToTextContainerCommand { File = file});
+                containerList.Add(converted);
+            }
+            var dictionary = (await Mediator.Send(new GetFrequencyDictionaryQuery { LanguageId = LanguageId})).Dictionary;
+            var container = new TextContainer(containerList, dictionary);
+
+            foreach(var file in container.Files)
+            {
+                file.GenerateScore(dictionary);
+                Console.WriteLine($"{file.Name} : {file.Scores.RealisticReadingThreshold}");
+            }
+
+            var contString = JsonSerializer.Serialize(container);
+            Console.WriteLine("Sending Container");
+            return Ok(contString);
+        }
 
         [HttpPost("LoadTestCorpus")]
         public async Task<IActionResult> LoadFiles(IList<IFormFile> files)

@@ -16,7 +16,7 @@
 
 <div class="row">
     <h5>Please upload the Text files for the Corpus here</h5>
-    <RadzenUpload @ref="Upload" Auto="false" Multiple="true" Url="http://localhost:5128/api/LoadTestCorpus" Complete="async (args) => await HandleDownloadExcel(args)"></RadzenUpload>
+    <RadzenUpload @ref="Upload" Auto="false" Multiple="true" Url=@($"http://localhost:5128/api/TestText/{LanguageId}") Complete="async (args) => await HandleDownloadExcel(args)"></RadzenUpload>
     <RadzenButton Text="Upload" Click="@( () => Upload.Upload())"></RadzenButton>
 </div>
 
