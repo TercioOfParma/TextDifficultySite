@@ -50,7 +50,7 @@ namespace TextDifficultyDeterminer.Website.Controllers
                 containerList.Add(converted);
             }
             var dictionary = (await Mediator.Send(new GetFrequencyDictionaryQuery { LanguageId = LanguageId})).Dictionary;
-            var container = new TextContainer(containerList, dictionary);
+            var container = new TextContainer(containerList, true);
 
             foreach(var file in container.Files)
             {
@@ -59,7 +59,7 @@ namespace TextDifficultyDeterminer.Website.Controllers
             }
 
             var contString = JsonSerializer.Serialize(container);
-            Console.WriteLine("Sending Container");
+            Console.WriteLine($"Sending Container {contString.Length}");
             return Ok(contString);
         }
 
@@ -76,7 +76,7 @@ namespace TextDifficultyDeterminer.Website.Controllers
                 var converted = await Mediator.Send(new TextFileToTextContainerCommand { File = file});
                 containerList.Add(converted);
             }
-            var container = new TextContainer(containerList);
+            var container = new TextContainer(containerList, false);
             foreach(var file in container.Files)
             {
                 file.GenerateScore(container.ConcatDictionary);

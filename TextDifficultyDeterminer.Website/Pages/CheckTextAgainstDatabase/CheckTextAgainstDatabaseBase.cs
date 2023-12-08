@@ -31,8 +31,10 @@ namespace TextDifficultyDeterminer.Website.CheckAgainstDatabase
         {
             Console.WriteLine($"Handling Response! {e.JsonResponse.ToString()}");
             var container = JsonSerializer.Deserialize<TextContainer>(e.RawResponse);
+
+            Console.WriteLine("File Deserialised!");
             var excelFile = await Mediator.Send(new TextContainerToExcelCommand { Container = container});
-            
+            Console.WriteLine("File Processed");
             var stream = new MemoryStream();
             excelFile.SaveAs(stream);
             stream.Position = 0;

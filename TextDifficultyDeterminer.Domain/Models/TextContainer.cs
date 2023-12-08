@@ -5,15 +5,11 @@ public class TextContainer
     
     public List<TextContainerFile> Files {get; set;}
     public FrequencyDictionary ConcatDictionary {get; set;}
-    public TextContainer(List<TextContainerFile> files, FrequencyDictionary dict)
+    public TextContainer(List<TextContainerFile> files, bool databaseDict)
     {
         Files = files;
-        ConcatDictionary = dict;
-    }
-    public TextContainer(List<TextContainerFile> files)
-    {
-        Files = files;
-        ConcatDictionary = GenerateConcatDictionary(files.Select(x => x.FrequencyDictionaryForThisFile).ToList());
+        if(!databaseDict)
+            ConcatDictionary = GenerateConcatDictionary(files.Select(x => x.FrequencyDictionaryForThisFile).ToList());
     }
 
     public static FrequencyDictionary GenerateConcatDictionary(List<FrequencyDictionary> dicts)
