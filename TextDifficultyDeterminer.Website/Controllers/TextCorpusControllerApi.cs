@@ -31,13 +31,31 @@ namespace TextDifficultyDeterminer.Website.Controllers
         [HttpPost("LoadCorpus/{LanguageId}")]
         public async Task<IActionResult> LoadFilesIntoDatabase(Guid LanguageId, IList<IFormFile> files)
         {
-             await Files.LoadFilesIntoDatabase(LanguageId, files);
-             return Ok();
+            Dictionary<string, string> dict = new();
+            foreach(var file in files)
+            {
+                if(file.ContentType != "text/plain")
+                    continue;
+                var reader = new StreamReader(file.OpenReadStream());
+                var textForFile = reader.ReadToEnd();
+                dict[file.FileName] = textForFile;
+            }
+            await Files.LoadFilesIntoDatabase(LanguageId, dict);
+            return Ok();
         }
         [HttpPost("TestText/{LanguageId}")]
         public async Task<IActionResult> CheckFilesAgainstDatabase(Guid LanguageId, IList<IFormFile> files)
         {
-            var container = await Files.CheckFilesAgainstDatabase(LanguageId, files);
+            Dictionary<string, string> dict = new();
+            foreach(var file in files)
+            {
+                if(file.ContentType != "text/plain")
+                    continue;
+                var reader = new StreamReader(file.OpenReadStream());
+                var textForFile = reader.ReadToEnd();
+                dict[file.FileName] = textForFile;
+            }
+            var container = await Files.CheckFilesAgainstDatabase(LanguageId, dict);
             var contString = JsonSerializer.Serialize(container);
             return Ok(contString);
         }
@@ -45,7 +63,16 @@ namespace TextDifficultyDeterminer.Website.Controllers
         [HttpPost("LoadTestCorpus")]
         public async Task<IActionResult> LoadFiles(IList<IFormFile> files)
         {
-            var container = await Files.LoadFiles(files);
+            Dictionary<string, string> dict = new();
+            foreach(var file in files)
+            {
+                if(file.ContentType != "text/plain")
+                    continue;
+                var reader = new StreamReader(file.OpenReadStream());
+                var textForFile = reader.ReadToEnd();
+                dict[file.FileName] = textForFile;
+            }
+            var container = await Files.LoadFiles(dict);
             var contString = JsonSerializer.Serialize(container);
             return Ok(contString);
         }

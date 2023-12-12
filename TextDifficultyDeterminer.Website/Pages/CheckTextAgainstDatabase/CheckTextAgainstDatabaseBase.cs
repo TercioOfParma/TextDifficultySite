@@ -27,6 +27,10 @@ namespace TextDifficultyDeterminer.Website.CheckAgainstDatabase
             LanguageList = languages.LanguageList;
         }
 
+        public async Task HandleCorpus()
+        {
+
+        }
         protected async Task HandleDownloadExcel(UploadCompleteEventArgs e)
         {
             Console.WriteLine($"Handling Response! {e.JsonResponse.ToString()}");

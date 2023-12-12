@@ -21,27 +21,19 @@ namespace TextDifficultyDeterminer.Website.Services
             Mediator = mediator;
             WebHostEnvironment = webHostEnvironment;
         }
-        public async Task LoadFilesIntoDatabase(Guid LanguageId, IList<IFormFile> files)
+        public async Task LoadFilesIntoDatabase(Guid LanguageId, Dictionary<string, string> files)
         {
-            Console.WriteLine("PING");
-            foreach(var file in files)
+            foreach(var file in files) 
             {
-                if(file.ContentType != "text/plain")
-                    continue;
-
-                var converted = await Mediator.Send(new LoadFileIntoDatabaseCommand { File = file, LanguageId = LanguageId});
+                var converted = await Mediator.Send(new LoadFileIntoDatabaseCommand { Filename = file.Key, Text = file.Value, LanguageId = LanguageId});
             }
-        
         }
-        public async Task<TextContainer> CheckFilesAgainstDatabase(Guid LanguageId, IList<IFormFile> files)
+        public async Task<TextContainer> CheckFilesAgainstDatabase(Guid LanguageId, Dictionary<string, string> files)
         {
             var containerList = new List<TextContainerFile>();
             foreach(var file in files)
             {
-                if(file.ContentType != "text/plain")
-                    continue;
-
-                var converted = await Mediator.Send(new TextFileToTextContainerCommand { File = file});
+                var converted = await Mediator.Send(new TextFileToTextContainerCommand { Filename = file.Key, Text = file.Value});
                 containerList.Add(converted);
             }
             var dictionary = (await Mediator.Send(new GetFrequencyDictionaryQuery { LanguageId = LanguageId})).Dictionary;
@@ -56,16 +48,12 @@ namespace TextDifficultyDeterminer.Website.Services
             return container; 
         }
 
-        public async Task<TextContainer> LoadFiles(IList<IFormFile> files)
+        public async Task<TextContainer> LoadFiles(Dictionary<string, string> files)
         {
-            Console.WriteLine("PING");
             var containerList = new List<TextContainerFile>();
             foreach(var file in files)
             {
-                if(file.ContentType != "text/plain")
-                    continue;
-
-                var converted = await Mediator.Send(new TextFileToTextContainerCommand { File = file});
+                var converted = await Mediator.Send(new TextFileToTextContainerCommand { Filename = file.Key, Text = file.Value});
                 containerList.Add(converted);
             }
             var container = new TextContainer(containerList, false);

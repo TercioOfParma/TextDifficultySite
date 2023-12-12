@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Http;
 
 public class TextFileToTextContainerCommand : IRequest<TextContainerFile>
 {
-    public IFormFile File {get; set;}
+    public string Text{get;set;}
+    public string Filename {get; set;}
 }
 
 public class TextFileToTextContainerValidator : AbstractValidator<TextFileToTextContainerCommand>
@@ -19,9 +20,6 @@ class TextFileToTextContainerHandler : IRequestHandler<TextFileToTextContainerCo
 {
     async Task<TextContainerFile> IRequestHandler<TextFileToTextContainerCommand, TextContainerFile>.Handle(TextFileToTextContainerCommand request, CancellationToken cancellationToken)
     {
-        var reader = new StreamReader(request.File.OpenReadStream());
-        var textForFile = reader.ReadToEnd();
-
-        return new TextContainerFile(request.File.FileName, textForFile);
+        return new TextContainerFile(request.Filename, request.Text);
     }
 }

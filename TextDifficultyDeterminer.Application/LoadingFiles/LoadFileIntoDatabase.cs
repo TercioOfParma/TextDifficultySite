@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Http;
 
 public class LoadFileIntoDatabaseCommand : IRequest<bool>
 {
-    public IFormFile File {get; set;}
+    public string Text {get; set;}
+    public string Filename {get; set;}
     public Guid LanguageId {get; set;}
 }
 
@@ -25,11 +26,8 @@ public class LoadFileIntoDatabaseHandler : IRequestHandler<LoadFileIntoDatabaseC
     }
     async Task<bool> IRequestHandler<LoadFileIntoDatabaseCommand, bool>.Handle(LoadFileIntoDatabaseCommand request, CancellationToken cancellationToken)
     {
-        Console.WriteLine("Request Handler Hit!");
-        var reader = new StreamReader(request.File.OpenReadStream());
-        var textForFile = reader.ReadToEnd();
 
-        var dictionaryGenerated = new TextContainerFile(request.File.FileName, textForFile);
+        var dictionaryGenerated = new TextContainerFile(request.Filename, request.Text);
         foreach(var word in dictionaryGenerated.FrequencyDictionaryForThisFile.Words)
         {
             word.Language = request.LanguageId;
