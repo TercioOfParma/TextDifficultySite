@@ -17,6 +17,7 @@ public class TextContainerToExcelValidator : AbstractValidator<TextContainerToEx
 
 class TextContainerToExcelHandler : IRequestHandler<TextContainerToExcelCommand, XLWorkbook>
 {
+    private const int MAXIMUM_SHEETNAME_LENGTH = 31;
     async Task<XLWorkbook> IRequestHandler<TextContainerToExcelCommand, XLWorkbook>.Handle(TextContainerToExcelCommand request, CancellationToken cancellationToken)
     {
         var workbook = new XLWorkbook();
@@ -45,7 +46,11 @@ class TextContainerToExcelHandler : IRequestHandler<TextContainerToExcelCommand,
     private void GenerateXLWorksheetOutput(XLWorkbook workbook, TextContainerFile file)
     {
         Console.WriteLine($"Begin File {file.Name}");
-        var worksheet = workbook.AddWorksheet(file.Name);
+        var filename = file.Name;
+        if(file.Name.Length > MAXIMUM_SHEETNAME_LENGTH)
+            filename = file.Name.Substring(0, MAXIMUM_SHEETNAME_LENGTH);
+
+        var worksheet = workbook.AddWorksheet(filename);
 
         worksheet.Cell(1,1).InsertData(new List<string>{"Name"});
         worksheet.Cell(1,2).InsertData(new List<string>{file.Name});

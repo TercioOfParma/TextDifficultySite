@@ -16,9 +16,8 @@
 
 <div class="row">
     <h5>Please upload the Text files for the Corpus here</h5>
-    <InputFile OnChange="HandleCorpus" multiple></InputFile>
-    <RadzenUpload @ref="Upload" Auto="false" Multiple="true" Url=@($"http://localhost:5128/api/TestText/{LanguageId}") Complete="async (args) => await HandleDownloadExcel(args)"></RadzenUpload>
-    <RadzenButton Text="Upload" Click="@( () => Upload.Upload())"></RadzenButton>
+    <InputFile OnChange="UpdateFiles" multiple></InputFile>
+    <RadzenButton Text="Upload" Click="HandleCorpus"></RadzenButton>
 </div>
 
 @if(IsNotZip)
