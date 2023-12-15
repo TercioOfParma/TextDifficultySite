@@ -24,6 +24,7 @@ class GetFrequencyDictionaryHandler : IRequestHandler<GetFrequencyDictionaryQuer
         var dictionary = new FrequencyDictionary(words);
         dictionary.OverallWordCount = words.Select(x => x.FrequencyOfWord).ToList().Aggregate((a,c) => a + c);
         Console.WriteLine(dictionary.OverallWordCount);
+        dictionary.CalculateDifficultyScores();
         return new GetFrequencyDictionaryResult { Dictionary = dictionary };
     }
 }
