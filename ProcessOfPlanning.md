@@ -84,6 +84,12 @@ Therefore the Final Score should be :
 
 Threshold = 2^Score * 125,0000
 
+# Reapproaching the Difficulty Problem
+
+The levelling in practical tests is a bit weird. Using a corpus based on the Vulgate, Lingua Latina came out as very difficult. I think it may be better to simply take the amount of words to learn a word, calculated on request, and then just use that.
+
+Difficulty Score = ( Overall Word Count / Proportion of Words that are that word ) * 12
+
 # Is this a classification problem?
 
 The overwhelming majority of any text will be easier words. So what even is difficulty?
@@ -116,9 +122,9 @@ These are usually bigger
 
 # Todo 10th November 2023
 
-1) Set up Database with Language and Word Tables, with the "Language" variable in Word as a foreign key for Language
-2) Provide Functionality for Adding Words and Languages to the Database 
-3) Provide Functionality for Adding Words from a Text to a Preexisting text
-4) Offer this as a Web API
+1) Set up Database with Language and Word Tables, with the "Language" variable in Word as a foreign key for Language X
+2) Provide Functionality for Adding Words and Languages to the Database  X
+3) Provide Functionality for Adding Words from a Text to a Preexisting Language X
+4) Offer this as a Web API X
 5) Provide some sort of way of preventing the spamming of text (Hash Keys?)
 

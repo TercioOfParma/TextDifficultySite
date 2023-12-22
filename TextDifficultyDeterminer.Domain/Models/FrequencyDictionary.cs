@@ -13,7 +13,7 @@ public class FrequencyDictionary
     public void CalculateDifficultyScores()
     {
         foreach(var word in Words)
-            word.DifficultyScore = Math.Log(Convert.ToDouble((OverallWordCount / word.FrequencyOfWord) * 12) / DifficultyEvaluatorService.READING_LEVEL_FACTOR, 2.0d); //Log 
+            word.DifficultyScore = (word.FrequencyOfWord / OverallWordCount) * DifficultyEvaluatorService.FREQUENCY_MULTIPLIER;
     }
     public void ApplyFrequencyWords(List<FrequencyWord> words)
     {

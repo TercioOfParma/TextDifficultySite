@@ -2,7 +2,7 @@
 
 public class DifficultyEvaluatorService 
 {
-    public const double READING_LEVEL_FACTOR = 125_000.0;
+    public const double FREQUENCY_MULTIPLIER = 12.0;
     private const double REALISTIC_READING_THRESHOLD = 0.95;
     private const double EXTENSIVE_READING_THRESHOLD = 0.98;
     public static TextScores GenerateScore(string name, string text, FrequencyDictionary dictToCheck)
@@ -18,12 +18,8 @@ public class DifficultyEvaluatorService
             wordCount += Convert.ToInt32(word.FrequencyOfWord);
             uniqueWords += 1;
             var dictEntry = dictToCheck.Words.FirstOrDefault(x => x.Word == word.Word);
-            if(dictEntry != null)
-                word.DifficultyScore = dictEntry.DifficultyScore;
-            else 
-            {
-                word.DifficultyScore = Math.Log(Convert.ToDouble((dictToCheck.OverallWordCount / word.FrequencyOfWord ) * 12) / READING_LEVEL_FACTOR, 2.0d); //Log 
-            }
+            word.DifficultyScore = (word.FrequencyOfWord / dictToCheck.OverallWordCount) * FREQUENCY_MULTIPLIER;
+            
             wordList.Add(word);
             edited.FrequencyDictionaryForThisFile.Words.RemoveAll(x => x.Word == word.Word);
         }
@@ -39,8 +35,8 @@ public class DifficultyEvaluatorService
         score.Name = name; 
         score.UniqueWords = uniqueWords;
         score.WordCount = wordCount; 
-        score.RealisticReadingThreshold = Convert.ToInt32(Math.Pow(2.0, wordList.ElementAt(realisticIndex).DifficultyScore) * READING_LEVEL_FACTOR);
-        score.ExtendedReadingThreshold = Convert.ToInt32(Math.Pow(2.0, wordList.ElementAt(extensiveIndex).DifficultyScore) * READING_LEVEL_FACTOR); 
+        score.RealisticReadingThreshold = realisticIndex;
+        score.ExtendedReadingThreshold = extensiveIndex; 
         Console.WriteLine($"{name} Difficulty Score generated!");
         return score; 
     }
