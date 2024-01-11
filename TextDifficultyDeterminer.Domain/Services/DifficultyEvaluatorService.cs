@@ -18,42 +18,48 @@ public class DifficultyEvaluatorService
             wordCount += Convert.ToInt32(word.FrequencyOfWord);
             uniqueWords += 1;
             var dictEntry = dictToCheck.Words.FirstOrDefault(x => x.Word == word.Word);
-            word.DifficultyScore = (word.FrequencyOfWord / dictToCheck.OverallWordCount) * FREQUENCY_MULTIPLIER;
-            
+            if(dictEntry != null)
+            {
+                word.DifficultyScore = dictToCheck.OverallWordCount / dictEntry.FrequencyOfWord * FREQUENCY_MULTIPLIER;
+            }
+            else
+            { 
+                word.DifficultyScore = dictToCheck.OverallWordCount * FREQUENCY_MULTIPLIER;  
+            }
             wordList.Add(word);
             edited.FrequencyDictionaryForThisFile.Words.RemoveAll(x => x.Word == word.Word);
         }
-
+        edited.FrequencyDictionaryForThisFile.Words = wordList;
         wordList = wordList.OrderBy(x => x.DifficultyScore).ToList();
 
         ulong realisticThreshold = Convert.ToUInt64(Math.Round(wordCount * REALISTIC_READING_THRESHOLD));
         ulong extensiveThreshold = Convert.ToUInt64(Math.Round(wordCount * EXTENSIVE_READING_THRESHOLD));
 
 
-        int realisticIndex = FindIndexForThreshold(realisticThreshold, wordList);
-        int extensiveIndex = FindIndexForThreshold(extensiveThreshold, wordList);
+        var realisticIndex = FindWordForThreshold(realisticThreshold, wordList);
+        var extensiveIndex = FindWordForThreshold(extensiveThreshold, wordList);
         score.Name = name; 
         score.UniqueWords = uniqueWords;
         score.WordCount = wordCount; 
-        score.RealisticReadingThreshold = realisticIndex;
-        score.ExtendedReadingThreshold = extensiveIndex; 
+        score.RealisticReadingThreshold = Convert.ToInt32(realisticIndex.DifficultyScore);
+        score.ExtendedReadingThreshold = Convert.ToInt32(extensiveIndex.DifficultyScore); 
         Console.WriteLine($"{name} Difficulty Score generated!");
         return score; 
     }
 
-    public static int FindIndexForThreshold(ulong threshold, List<FrequencyWord> words)
+    public static FrequencyWord FindWordForThreshold(ulong threshold, List<FrequencyWord> words)
     {
         ulong wordCountIterator = 0;
-        int i = 0;
+        var currentWord = new FrequencyWord();
         foreach(var word in words)
         {
             if(wordCountIterator > threshold)
                 break;
             
             wordCountIterator += word.FrequencyOfWord;
-            i++;
+            currentWord = word;
         }
-        return i;
+        return currentWord;
     }
 
 }
