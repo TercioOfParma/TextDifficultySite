@@ -3,7 +3,7 @@
 public class FrequencyDictionary 
 {
     public List<FrequencyWord> Words {get; set;}
-    public ulong OverallWordCount {get; set;}
+    public long OverallWordCount {get; set;}
 
     public FrequencyDictionary() => Words = new();
     public FrequencyDictionary(List<FrequencyWord> words)

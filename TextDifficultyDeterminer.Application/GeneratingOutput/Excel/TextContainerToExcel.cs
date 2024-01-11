@@ -22,17 +22,12 @@ class TextContainerToExcelHandler : IRequestHandler<TextContainerToExcelCommand,
     {
         var workbook = new XLWorkbook();
         Console.WriteLine("Generate Workbook");
-        var concatDictionary = workbook.AddWorksheet("Concatenated Dictionary");
+        var concatDictionary = workbook.AddWorksheet("Overall Scores");
         concatDictionary.Cell(3,1).InsertData(new List<string> {"Overall Word Count"});
-        concatDictionary.Cell(3,1).InsertData(new List<ulong> {request.Container.ConcatDictionary.OverallWordCount});
-
-        concatDictionary.Cell(4,1).InsertData(new List<string> {"Frequency Word ID", "Language", "Word", "Frequency", "DifficultyScore"}, transpose : true);
-        concatDictionary.Cell(5,1).InsertData(request.Container.ConcatDictionary.Words.OrderByDescending(x => x.FrequencyOfWord).ToList());
-        Console.WriteLine("Concat Dictionary Cells Done");
+        concatDictionary.Cell(3,2).InsertData(new List<long> {request.Container.ConcatDictionary.OverallWordCount});
         var textScoresForFiles = request.Container.Files.Select(x => x.Scores).OrderBy(x => x.RealisticReadingThreshold).ToList();
-        concatDictionary.Cell(4,7).InsertData(new List<string> {"Name", "Realistic Reading Threshold", "Extensive Reading Threshold", "Word Count", "Unique Words"}, transpose: true);
-        concatDictionary.Cell(5,7).InsertData(textScoresForFiles);
-        Console.WriteLine("Text Scores Done");
+        concatDictionary.Cell(4,1).InsertData(new List<string> {"Name", "Realistic Reading Threshold", "Extensive Reading Threshold", "Word Count", "Unique Words"}, transpose: true);
+        concatDictionary.Cell(5,1).InsertData(textScoresForFiles);
         foreach(var file in request.Container.Files)
         {
             GenerateXLWorksheetOutput(workbook, file);

@@ -32,8 +32,8 @@ public class DifficultyEvaluatorService
         edited.FrequencyDictionaryForThisFile.Words = wordList;
         wordList = wordList.OrderBy(x => x.DifficultyScore).ToList();
 
-        ulong realisticThreshold = Convert.ToUInt64(Math.Round(wordCount * REALISTIC_READING_THRESHOLD));
-        ulong extensiveThreshold = Convert.ToUInt64(Math.Round(wordCount * EXTENSIVE_READING_THRESHOLD));
+        long realisticThreshold = Convert.ToInt64(Math.Round(wordCount * REALISTIC_READING_THRESHOLD));
+        long extensiveThreshold = Convert.ToInt64(Math.Round(wordCount * EXTENSIVE_READING_THRESHOLD));
 
 
         var realisticIndex = FindWordForThreshold(realisticThreshold, wordList);
@@ -47,9 +47,9 @@ public class DifficultyEvaluatorService
         return score; 
     }
 
-    public static FrequencyWord FindWordForThreshold(ulong threshold, List<FrequencyWord> words)
+    public static FrequencyWord FindWordForThreshold(long threshold, List<FrequencyWord> words)
     {
-        ulong wordCountIterator = 0;
+        long wordCountIterator = 0;
         var currentWord = new FrequencyWord();
         foreach(var word in words)
         {
