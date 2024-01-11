@@ -1,5 +1,8 @@
+using System.ComponentModel.DataAnnotations;
+
 public class Language 
 {
+    [MaxLength(255)]
     public Guid Id {get; set;}
     public string LanguageName {get; set;}
 

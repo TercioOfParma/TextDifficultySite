@@ -10,33 +10,37 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace TextDifficultyDeterminer.Infrastructure.Migrations
 {
     [DbContext(typeof(TextDifficultyDbContext))]
-    [Migration("20240111155317_ToLongFromULong")]
-    partial class ToLongFromULong
+    [Migration("20240111162329_MySQLNewMigration")]
+    partial class MySQLNewMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "7.0.13");
+            modelBuilder
+                .HasAnnotation("ProductVersion", "7.0.13")
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("FrequencyWord", b =>
                 {
                     b.Property<Guid>("FrequencyWordId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasMaxLength(255)
+                        .HasColumnType("char(255)");
 
-                    b.Property<double>("DifficultyScore")
-                        .HasColumnType("REAL");
+                    b.Property<long>("DifficultyScore")
+                        .HasColumnType("bigint");
 
                     b.Property<long>("FrequencyOfWord")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bigint");
 
                     b.Property<Guid>("Language")
-                        .HasColumnType("TEXT");
+                        .HasMaxLength(255)
+                        .HasColumnType("char(255)");
 
                     b.Property<string>("Word")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("longtext");
 
                     b.HasKey("FrequencyWordId");
 
@@ -47,11 +51,12 @@ namespace TextDifficultyDeterminer.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasMaxLength(255)
+                        .HasColumnType("char(255)");
 
                     b.Property<string>("LanguageName")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 

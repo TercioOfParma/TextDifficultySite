@@ -20,11 +20,11 @@ public class DifficultyEvaluatorService
             var dictEntry = dictToCheck.Words.FirstOrDefault(x => x.Word == word.Word);
             if(dictEntry != null)
             {
-                word.DifficultyScore = dictToCheck.OverallWordCount / dictEntry.FrequencyOfWord * FREQUENCY_MULTIPLIER;
+                word.DifficultyScore = Convert.ToInt64(dictToCheck.OverallWordCount / dictEntry.FrequencyOfWord * FREQUENCY_MULTIPLIER);
             }
             else
             { 
-                word.DifficultyScore = dictToCheck.OverallWordCount * FREQUENCY_MULTIPLIER;  
+                word.DifficultyScore = Convert.ToInt64(dictToCheck.OverallWordCount * FREQUENCY_MULTIPLIER);  
             }
             wordList.Add(word);
             edited.FrequencyDictionaryForThisFile.Words.RemoveAll(x => x.Word == word.Word);

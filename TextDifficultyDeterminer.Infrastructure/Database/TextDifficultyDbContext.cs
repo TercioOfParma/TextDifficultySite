@@ -10,7 +10,7 @@ public class TextDifficultyDbContext : DbContext, IUnitOfWork
     public string DbPath {get; set;} = "TextCorpus.db";
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
-        => options.UseSqlite($"Data Source={DbPath}");
+        => options.UseMySQL($"server=localhost;database=library;user=LanguageApp;password=DummyPassword");
 
     public async Task<int> SaveChangesAsync()
     {
