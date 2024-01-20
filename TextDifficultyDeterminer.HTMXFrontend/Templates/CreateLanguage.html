@@ -1,0 +1,11 @@
+{{ include 'Header.html'}}
+<h3>Create Language</h3>
+<form id="LanguageInformation">
+<input type="text" name="LanguageName" />
+</form>
+<button type="button" hx-post="/CreateLanguage" hx-target="#result" hx-swap="innerHtml" hx-include="#LanguageInformation">Submit</button>
+
+<div id="result">
+</div>
+
+{{ include 'Footer.html' }}

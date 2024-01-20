@@ -8,14 +8,16 @@ namespace TextDifficultyDeterminer.HTMXFrontend.Controllers
     public class HTMXFrontendController : ControllerBase
     {
         public Template IndexTemplate {get; set;}
+        public Template CreateLanguageTemplate {get; set;}
         public TemplateContext Context {get; set;}
         public HTMXFrontendController(Scriban.Runtime.ITemplateLoader templateLoader)
         {
             Context = new TemplateContext();
             Context.TemplateLoader = templateLoader;
-            var index = System.IO.File.ReadAllText("Templates/Index.html");
-            IndexTemplate = Template.Parse(index);
+            IndexTemplate = RenderTemplateService.RenderTemplate("Templates/Index.html");
+            CreateLanguageTemplate = RenderTemplateService.RenderTemplate("Templates/CreateLanguage.html");
         }
+        
         [HttpGet("/")]
         public ContentResult LoadIndex()
         {
@@ -31,7 +33,18 @@ namespace TextDifficultyDeterminer.HTMXFrontend.Controllers
             //await Task.CompletedTask;
             return new ContentResult
             { 
-                Content = "<h1> Create Language </h1>", 
+                Content = CreateLanguageTemplate.Render(Context), 
+                ContentType = "text/html"
+            };
+        }
+        [HttpPost("/CreateLanguage")]
+        [Consumes("application/x-www-form-urlencoded")]
+        public ContentResult CreateLanguage([FromForm]string LanguageName)
+        {
+            //await Task.CompletedTask;
+            return new ContentResult
+            { 
+                Content = "<p>Complete!</p>", 
                 ContentType = "text/html"
             };
         }
