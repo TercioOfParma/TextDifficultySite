@@ -13,14 +13,17 @@ namespace TextDifficultyDeterminer.HTMXFrontend.Controllers
         {
             Context = new TemplateContext();
             Context.TemplateLoader = templateLoader;
-            var index = System.IO.File.ReadAllText("Templates/index.html");
+            var index = System.IO.File.ReadAllText("Templates/Index.html");
             IndexTemplate = Template.Parse(index);
         }
         [HttpGet("/")]
-        public IActionResult LoadIndex()
+        public ContentResult LoadIndex()
         {
             //await Task.CompletedTask;
-            return base.Content(IndexTemplate.Render(Context), "text/html");
+            return new ContentResult 
+            {   Content = IndexTemplate.Render(Context), 
+                ContentType = "text/html"
+            };
         }
         [HttpGet("/CreateLanguage")]
         public ContentResult CreateLanguage()
