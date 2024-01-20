@@ -14,12 +14,10 @@ namespace TextDifficultyDeterminer.Website.Services
     public class ProcessTextFiles
     {
         protected IMediator Mediator {get; set;}
-        public IWebHostEnvironment WebHostEnvironment {get; set;}
 
-        public ProcessTextFiles(IMediator mediator, IWebHostEnvironment webHostEnvironment)
+        public ProcessTextFiles(IMediator mediator)
         {
             Mediator = mediator;
-            WebHostEnvironment = webHostEnvironment;
         }
         public async Task LoadFilesIntoDatabase(Guid LanguageId, Dictionary<string, string> files)
         {

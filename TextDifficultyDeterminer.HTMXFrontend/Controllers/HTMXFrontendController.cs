@@ -14,10 +14,12 @@ namespace TextDifficultyDeterminer.HTMXFrontend.Controllers
         public Template LoadFilesIntoLanguageTemplate {get; set;}
         public TemplateContext Context {get; set;}
         public IMediator _mediator {get; set;}
-        public HTMXFrontendController(Scriban.Runtime.ITemplateLoader templateLoader, IMediator mediator)
+        protected ProcessTextFilesService ProcessFiles {get; set;}
+        public HTMXFrontendController(Scriban.Runtime.ITemplateLoader templateLoader, IMediator mediator, ProcessTextFilesService process)
         {
             Context = new TemplateContext();
             _mediator = mediator;
+            ProcessFiles = process;
             Context.TemplateLoader = templateLoader;
             IndexTemplate = RenderTemplateService.RenderTemplate("Templates/Index.html");
             CreateLanguageTemplate = RenderTemplateService.RenderTemplate("Templates/CreateLanguage.html");
@@ -50,12 +52,13 @@ namespace TextDifficultyDeterminer.HTMXFrontend.Controllers
             var result = await _mediator.Send(new AddLanguageCommand { Language = new Language { LanguageName = LanguageName }});
             if(result)
                 {
-                return new ContentResult
-                { 
-                    Content = "<p>Complete!</p>", 
-                    ContentType = "text/html"
-                };
-            }
+                    HttpContext.Response.Headers.Add("HX-Trigger", "new-language-created");
+                    return new ContentResult
+                    { 
+                        Content = "<p>Complete!</p>", 
+                        ContentType = "text/html"
+                    };
+                }
             else
             {
                 return new ContentResult
@@ -99,14 +102,15 @@ namespace TextDifficultyDeterminer.HTMXFrontend.Controllers
                 System.Diagnostics.Debug.WriteLine($"{numberOfTokens}");
 
             }
-            await Files.LoadFilesIntoDatabase(Language, dict);
+            await ProcessFiles.LoadFilesIntoDatabase(Language, dict);
             if(result)
                 {
-                return new ContentResult
+                var complete = new ContentResult
                 { 
                     Content = $"<p>Complete! Tokens: {numberOfTokens} Number of Files = {Files.Count} GUID = {Language}</p>", 
                     ContentType = "text/html"
                 };
+                return complete;
             }
             else
             {

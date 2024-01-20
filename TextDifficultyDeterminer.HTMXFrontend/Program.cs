@@ -10,6 +10,7 @@ builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices();
 builder.Services.AddControllers();
 builder.Services.AddSingleton<ITemplateLoader, TemplateLoaderService>();
+builder.Services.AddTransient<ProcessTextFilesService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
