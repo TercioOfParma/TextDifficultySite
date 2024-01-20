@@ -2,7 +2,7 @@ using MediatR;
 
 public class AddLanguageCommand : IRequest<bool>
 {
-    public Language language {get; set;}
+    public Language Language {get; set;}
 }
 class AddLanguageHandler : IRequestHandler<AddLanguageCommand, bool>
 {
@@ -14,9 +14,9 @@ class AddLanguageHandler : IRequestHandler<AddLanguageCommand, bool>
 
     async Task<bool> IRequestHandler<AddLanguageCommand, bool>.Handle(AddLanguageCommand request, CancellationToken cancellationToken)
     {
-        if(unitOfWork.Languages.Where(x => x.LanguageName == request.language.LanguageName).Count() == 0)
+        if(unitOfWork.Languages.Where(x => x.LanguageName == request.Language.LanguageName).Count() == 0)
         {
-            await unitOfWork.Languages.AddAsync(request.language);
+            await unitOfWork.Languages.AddAsync(request.Language);
             await unitOfWork.SaveChangesAsync();
             return true;
         }

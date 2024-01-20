@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Scriban;
+using MediatR;
+//using TextDifficultyDeterminer.Application;
+//using TextDifficultyDeterminer.Domain;
 
 namespace TextDifficultyDeterminer.HTMXFrontend.Controllers 
 {
@@ -10,9 +13,11 @@ namespace TextDifficultyDeterminer.HTMXFrontend.Controllers
         public Template IndexTemplate {get; set;}
         public Template CreateLanguageTemplate {get; set;}
         public TemplateContext Context {get; set;}
-        public HTMXFrontendController(Scriban.Runtime.ITemplateLoader templateLoader)
+        public IMediator _mediator {get; set;}
+        public HTMXFrontendController(Scriban.Runtime.ITemplateLoader templateLoader, IMediator mediator)
         {
             Context = new TemplateContext();
+            _mediator = mediator;
             Context.TemplateLoader = templateLoader;
             IndexTemplate = RenderTemplateService.RenderTemplate("Templates/Index.html");
             CreateLanguageTemplate = RenderTemplateService.RenderTemplate("Templates/CreateLanguage.html");
@@ -39,9 +44,9 @@ namespace TextDifficultyDeterminer.HTMXFrontend.Controllers
         }
         [HttpPost("/CreateLanguage")]
         [Consumes("application/x-www-form-urlencoded")]
-        public ContentResult CreateLanguage([FromForm]string LanguageName)
+        public async Task<ContentResult> CreateLanguage([FromForm]string LanguageName)
         {
-            //await Task.CompletedTask;
+            var result = await _mediator.Send(new AddLanguageCommand { Language = new Language { LanguageName = LanguageName }});
             return new ContentResult
             { 
                 Content = "<p>Complete!</p>", 

@@ -29,7 +29,7 @@
 
     private async Task Submit()
     {
-        await Mediator.Send(new AddLanguageCommand { language = Language });
+        await Mediator.Send(new AddLanguageCommand { Language = Language });
         NavigationManager.NavigateTo("/");
     }
 }
