@@ -9,9 +9,9 @@
     </select>
     <input name="Files" type="file" multiple> </input>
 </form>
-<button type="button" hx-post="LoadNewFilesIntoLanguage" hx-target="#result" hx-swap="innerhtml">Submit</button>
+<button type="button" hx-encoding="multipart/form-data" hx-post="/LoadNewFilesIntoLanguage" hx-target="#result" hx-swap="innerhtml" hx-include="#AddToLanguage">Submit</button>
 
-<div class="result">
+<div id="result">
 
 </div>
 {{ include 'Footer.html'}}

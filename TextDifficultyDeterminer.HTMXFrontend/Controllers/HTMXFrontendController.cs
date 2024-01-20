@@ -80,5 +80,42 @@ namespace TextDifficultyDeterminer.HTMXFrontend.Controllers
                 ContentType = "text/html"
             };
         }
+
+        [HttpPost("/LoadNewFilesIntoLanguage")]
+        public async Task<ContentResult> LoadNewFilesIntoLanguageForm([FromForm] List<IFormFile> Files, [FromForm] Guid Language)
+        {
+            var result = true;
+            Dictionary<string, string> dict = new();
+            var numberOfTokens = 0;
+            System.Diagnostics.Debug.WriteLine(Files.Count);
+            foreach(var file in Files)
+            {
+                if(file.ContentType != "text/plain")
+                    continue;
+                var reader = new StreamReader(file.OpenReadStream());
+                var textForFile = reader.ReadToEnd();
+                dict[file.FileName] = textForFile;
+                numberOfTokens += textForFile.Length;
+                System.Diagnostics.Debug.WriteLine($"{numberOfTokens}");
+
+            }
+            await Files.LoadFilesIntoDatabase(Language, dict);
+            if(result)
+                {
+                return new ContentResult
+                { 
+                    Content = $"<p>Complete! Tokens: {numberOfTokens} Number of Files = {Files.Count} GUID = {Language}</p>", 
+                    ContentType = "text/html"
+                };
+            }
+            else
+            {
+                return new ContentResult
+                { 
+                    Content = "<p>Error, Language Already Exists!</p>", 
+                    ContentType = "text/html"
+                };
+            }
+        }
     }
 }
