@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Scriban;
+using Scriban.Runtime;
 using MediatR;
-//using TextDifficultyDeterminer.Application;
-//using TextDifficultyDeterminer.Domain;
 
 namespace TextDifficultyDeterminer.HTMXFrontend.Controllers 
 {
@@ -12,6 +11,7 @@ namespace TextDifficultyDeterminer.HTMXFrontend.Controllers
     {
         public Template IndexTemplate {get; set;}
         public Template CreateLanguageTemplate {get; set;}
+        public Template LoadFilesIntoLanguageTemplate {get; set;}
         public TemplateContext Context {get; set;}
         public IMediator _mediator {get; set;}
         public HTMXFrontendController(Scriban.Runtime.ITemplateLoader templateLoader, IMediator mediator)
@@ -21,6 +21,7 @@ namespace TextDifficultyDeterminer.HTMXFrontend.Controllers
             Context.TemplateLoader = templateLoader;
             IndexTemplate = RenderTemplateService.RenderTemplate("Templates/Index.html");
             CreateLanguageTemplate = RenderTemplateService.RenderTemplate("Templates/CreateLanguage.html");
+            LoadFilesIntoLanguageTemplate = RenderTemplateService.RenderTemplate("Templates/LoadNewFilesIntoLanguage.html");
         }
         
         [HttpGet("/")]
@@ -47,9 +48,35 @@ namespace TextDifficultyDeterminer.HTMXFrontend.Controllers
         public async Task<ContentResult> CreateLanguage([FromForm]string LanguageName)
         {
             var result = await _mediator.Send(new AddLanguageCommand { Language = new Language { LanguageName = LanguageName }});
+            if(result)
+                {
+                return new ContentResult
+                { 
+                    Content = "<p>Complete!</p>", 
+                    ContentType = "text/html"
+                };
+            }
+            else
+            {
+                return new ContentResult
+                { 
+                    Content = "<p>Error, Language Already Exists!</p>", 
+                    ContentType = "text/html"
+                };
+            }
+        }
+        [HttpGet("/LoadNewFilesIntoLanguage")]
+        public async Task<ContentResult> LoadNewFilesIntoLanguageForm()
+        {
+            var languages = await _mediator.Send(new GetLanguagesQuery());
+            var parameters = new ScriptObject();
+            parameters["Languages"] = languages.LanguageList;
+            Context.PushGlobal(parameters);
+            var content = LoadFilesIntoLanguageTemplate.Render(Context);
+            Context.PopGlobal();
             return new ContentResult
             { 
-                Content = "<p>Complete!</p>", 
+                Content = content, 
                 ContentType = "text/html"
             };
         }

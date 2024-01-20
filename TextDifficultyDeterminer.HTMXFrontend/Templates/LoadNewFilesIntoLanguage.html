@@ -1,0 +1,17 @@
+{{ include 'Header.html' }}
+<h3>Include Files for New Language</h3>
+
+<form id="AddToLanguage">
+    <select name="Language">
+    {{for $Language in Languages}}
+        <option value="{{ $Language.id }}">{{ $Language.language_name }}</option>
+    {{end}}
+    </select>
+    <input name="Files" type="file" multiple> </input>
+</form>
+<button type="button" hx-post="LoadNewFilesIntoLanguage" hx-target="#result" hx-swap="innerhtml">Submit</button>
+
+<div class="result">
+
+</div>
+{{ include 'Footer.html'}}
