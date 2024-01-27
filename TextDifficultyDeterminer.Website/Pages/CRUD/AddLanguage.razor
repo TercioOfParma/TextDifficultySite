@@ -1,7 +1,10 @@
-@using Radzen;
-@using Radzen.Blazor;
-@using MediatR;
+@using Radzen
+@using Radzen.Blazor
+@using MediatR
+@using TextDifficultyDeterminer.Website.AddLanguage
 @page "/AddLanguage"
+
+@inherits AddLanguageBase
 
 @inject NavigationManager NavigationManager;
 
@@ -12,24 +15,5 @@
         <RadzenTextBox @bind-Value=Language.LanguageName />
         <RadzenButton ButtonType="ButtonType.Submit" Text="Submit" ButtonStyle="ButtonStyle.Primary"></RadzenButton>
     </EditForm>
-
 }
-
-@code 
-{
-    [Inject]
-    private IMediator Mediator {get; set;}
-
-
-    private Language Language {get; set; } = new();
-    protected async Task OnInitialisedAsync()
-    {
-
-    }
-
-    private async Task Submit()
-    {
-        await Mediator.Send(new AddLanguageCommand { Language = Language });
-        NavigationManager.NavigateTo("/");
-    }
-}
+<ErrorCheck Complete=@Complete Error=@Error></ErrorCheck>

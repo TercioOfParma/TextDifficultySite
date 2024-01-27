@@ -19,7 +19,6 @@ namespace TextDifficultyDeterminer.Website.TestCorpus
         [Inject]
         protected ProcessTextFiles TextFiles {get; set;}
         public TestCorpusUploadDto TestCorpusUploadDto {get; set; } = new();
-        public bool IsNotZip {get; set;} = false;
         public RadzenUpload Upload {get;set;} = new();
         public IReadOnlyList<IBrowserFile> FilesToUpload {get; set;}
         private const int MAX_TEXT_FILES = 1000;

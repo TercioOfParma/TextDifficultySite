@@ -18,11 +18,8 @@ namespace TextDifficultyDeterminer.Website.CheckAgainstDatabase
         public IJSRuntime JS {get; set;}
         [Inject]
         protected ProcessTextFiles TextFiles {get; set;}
-        public bool IsNotZip {get; set;} = false;
         public Guid LanguageId {get; set;}
         public List<Language> LanguageList {get; set;}
-        public RadzenUpload Upload {get;set;} = new();
-        public bool IsUploaded {get; set;} = false;
         public IReadOnlyList<IBrowserFile> FilesToUpload {get; set;}
         private const int MAX_TEXT_FILES = 1000;
 
@@ -49,15 +46,12 @@ namespace TextDifficultyDeterminer.Website.CheckAgainstDatabase
             }
 
             var container = await TextFiles.CheckFilesAgainstDatabase(LanguageId, dict);
-
-            Console.WriteLine("File Deserialised!");
             var excelFile = await Mediator.Send(new TextContainerToExcelCommand { Container = container});
-            Console.WriteLine("File Processed");
             var stream = new MemoryStream();
             excelFile.SaveAs(stream);
             stream.Position = 0;
             using var streamRef = new DotNetStreamReference(stream: stream);
-
+            Complete = true;
             await JS.InvokeVoidAsync("downloadFileFromStream", "Test.xlsx", streamRef);
         }
 

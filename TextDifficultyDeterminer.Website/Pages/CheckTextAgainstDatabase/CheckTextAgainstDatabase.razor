@@ -20,9 +20,4 @@
     <RadzenButton Text="Upload" Click="HandleCorpus"></RadzenButton>
 </div>
 
-@if(IsNotZip)
-{
-    <div class="row">
-        <RadzenText class="text-danger" Text="Error! Incorrect File format!"></RadzenText>
-    </div>
-}
+<ErrorCheck Complete=@Complete Error=@Error></ErrorCheck>

@@ -19,12 +19,4 @@
     <RadzenButton Text="Upload" Click="HandleCorpus"></RadzenButton>
 </div>
 
-@if(IsUploaded)
-{
-    <div class="row">
-        <RadzenText class="text-success" Text="Uploaded to Database!"></RadzenText>
-    </div>
-}
-<div class="row">
-    <RadzenText class="text-danger" Text="Error! Incorrect File format!"></RadzenText>
-</div>
+<ErrorCheck Complete=@Complete Error=@Error></ErrorCheck>
