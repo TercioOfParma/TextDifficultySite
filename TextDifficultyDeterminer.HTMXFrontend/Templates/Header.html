@@ -2,5 +2,17 @@
 
 <head>
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <link rel="stylesheet" href="static/site.css">
 </head>
 <body hx-boost="true">
+<div class="header">
+    <h3>Text Difficulty Determiner</h3>
+</div>
+<div class="navbar-menu">
+    <dl>
+        <dt class="navbar-menu-item" hx-push-url="true" hx-get="/language" hx-target="#main-content" hx-swap="innerHtml" hx-include="">Add Language</dt>
+        <dt class="navbar-menu-item" hx-push-url="true" hx-get="/load" hx-target="#main-content" hx-swap="innerHtml">Load Text into Language</dt>
+        <dt class="navbar-menu-item" hx-push-url="true" hx-get="/check" hx-target="#main-content" hx-swap="innerHtml">Check Data Against Language</dt>
+    </dl>
+</div>
+<div class="content" id="main-content"><!--Closed in the footer-->

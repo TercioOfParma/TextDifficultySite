@@ -1,4 +1,3 @@
-{{ include 'Header.html'}}
 <h1>Welcome to the Text Difficulty API!</h1>
 <p>
     On this site, there is access to a service that will help you to evaluate the difficulty of texts in various languages. This should be able to work
@@ -6,14 +5,3 @@
 
     Currently, only Latin has any serious meaningful implementation, and so therefore it's not going to be the most useful for most people.
 </p>
-
-
-
-<button type="button" hx-get="/language" hx-target="#createlanguage" hx-swap="innerHtml">Create Language</button>
-<div id="createlanguage"></div>
-
-<button type="button" hx-get="/load" hx-target="#addtolanguage" hx-swap="innerHtml" hx-trigger="new-language-created from:body, click">Add Text to Language</button>
-<div id="addtolanguage"></div>
-
-
-{{ include 'Footer.html' }}

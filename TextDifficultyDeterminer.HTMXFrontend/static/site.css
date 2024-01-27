@@ -1,0 +1,21 @@
+* {box-sizing: border-box;}
+
+body { margin:0px}
+
+div.header
+{
+    height:10%;
+    background-color: #d9b757;
+}
+
+div.navbar-menu {
+    float:left;
+    border-color: black;
+    background-color: #d9b757;
+    border-width: 20px;
+    height:100%;
+}
+
+dt.navbar-menu-item {
+    background-color: #a89358;
+}

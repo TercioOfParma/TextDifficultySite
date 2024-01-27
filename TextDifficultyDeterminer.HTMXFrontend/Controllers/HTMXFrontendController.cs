@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Web;
 using Scriban;
 using Scriban.Runtime;
 using MediatR;
@@ -13,6 +14,7 @@ namespace TextDifficultyDeterminer.HTMXFrontend.Controllers
         public Template CreateLanguageTemplate {get; set;}
         public Template LoadFilesIntoLanguageTemplate {get; set;}
         public Template CheckFilesAgainstDatabaseTemplate {get; set;}
+        public Template NonAjax {get; set;}
         public Template DownloadTemplate {get; set;}
         public TemplateContext Context {get; set;}
         public IMediator _mediator {get; set;}
@@ -28,24 +30,35 @@ namespace TextDifficultyDeterminer.HTMXFrontend.Controllers
             LoadFilesIntoLanguageTemplate = RenderTemplateService.RenderTemplate("Templates/LoadNewFilesIntoLanguage.html");
             CheckFilesAgainstDatabaseTemplate = RenderTemplateService.RenderTemplate("Templates/CheckAgainstDb.html");
             DownloadTemplate = RenderTemplateService.RenderTemplate("Templates/Download.html");
+            NonAjax = RenderTemplateService.RenderTemplate("Templates/NonAjax.html");
         }
         
         [HttpGet("/")]
         public ContentResult LoadIndex()
         {
-            //await Task.CompletedTask;
+            var parameters = new ScriptObject();
+            var content ="";
+            if(HttpContext.Request.Headers["HX-Request"].Count() == 0)
+                content = RenderNonAjaxPage("CreateLanguage.html", parameters);
+            else 
+                content = IndexTemplate.Render(Context);
             return new ContentResult 
-            {   Content = IndexTemplate.Render(Context), 
+            {   Content = content, 
                 ContentType = "text/html"
             };
         }
         [HttpGet("/language")]
         public ContentResult CreateLanguage()
         {
-            //await Task.CompletedTask;
+            var parameters = new ScriptObject();
+            var content ="";
+            if(HttpContext.Request.Headers["HX-Request"].Count() == 0)
+                content = RenderNonAjaxPage("CreateLanguage.html", parameters);
+            else 
+                content = CreateLanguageTemplate.Render(Context);
             return new ContentResult
             { 
-                Content = CreateLanguageTemplate.Render(Context), 
+                Content = content, 
                 ContentType = "text/html"
             };
         }
@@ -78,8 +91,14 @@ namespace TextDifficultyDeterminer.HTMXFrontend.Controllers
             var languages = await _mediator.Send(new GetLanguagesQuery());
             var parameters = new ScriptObject();
             parameters["Languages"] = languages.LanguageList;
-            Context.PushGlobal(parameters);
-            var content = LoadFilesIntoLanguageTemplate.Render(Context);
+            var content ="";
+            if(HttpContext.Request.Headers["HX-Request"].Count() == 0)
+                content = RenderNonAjaxPage("LoadNewFilesIntoLanguage.html", parameters);
+            else
+            {
+                Context.PushGlobal(parameters);
+                content = LoadFilesIntoLanguageTemplate.Render(Context);
+            }
             Context.PopGlobal();
             return new ContentResult
             { 
@@ -125,6 +144,12 @@ namespace TextDifficultyDeterminer.HTMXFrontend.Controllers
                 };
             }
         }
+        private string RenderNonAjaxPage(string filename, ScriptObject parameters)
+        {
+            parameters["FileName"] = filename;
+            Context.PushGlobal(parameters);
+            return NonAjax.Render(Context);
+        }
 
         [HttpGet("/check")]
         public async Task<ContentResult> CheckFilesAgainstDatabasePage()
@@ -132,8 +157,14 @@ namespace TextDifficultyDeterminer.HTMXFrontend.Controllers
             var languages = await _mediator.Send(new GetLanguagesQuery());
             var parameters = new ScriptObject();
             parameters["Languages"] = languages.LanguageList;
-            Context.PushGlobal(parameters);
-            var content = CheckFilesAgainstDatabaseTemplate.Render(Context);
+            var content = "";
+            if(HttpContext.Request.Headers["HX-Request"].Count() == 0)
+                content = RenderNonAjaxPage("CheckAgainstDb.html", parameters);
+            else 
+            {
+                Context.PushGlobal(parameters);
+                content = CheckFilesAgainstDatabaseTemplate.Render(Context);
+            }
             Context.PopGlobal();
             return new ContentResult
             { 
