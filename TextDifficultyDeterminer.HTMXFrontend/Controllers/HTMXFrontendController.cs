@@ -12,6 +12,8 @@ namespace TextDifficultyDeterminer.HTMXFrontend.Controllers
         public Template IndexTemplate {get; set;}
         public Template CreateLanguageTemplate {get; set;}
         public Template LoadFilesIntoLanguageTemplate {get; set;}
+        public Template CheckFilesAgainstDatabaseTemplate {get; set;}
+        public Template DownloadTemplate {get; set;}
         public TemplateContext Context {get; set;}
         public IMediator _mediator {get; set;}
         protected ProcessTextFilesService ProcessFiles {get; set;}
@@ -24,6 +26,8 @@ namespace TextDifficultyDeterminer.HTMXFrontend.Controllers
             IndexTemplate = RenderTemplateService.RenderTemplate("Templates/Index.html");
             CreateLanguageTemplate = RenderTemplateService.RenderTemplate("Templates/CreateLanguage.html");
             LoadFilesIntoLanguageTemplate = RenderTemplateService.RenderTemplate("Templates/LoadNewFilesIntoLanguage.html");
+            CheckFilesAgainstDatabaseTemplate = RenderTemplateService.RenderTemplate("Templates/CheckAgainstDb.html");
+            DownloadTemplate = RenderTemplateService.RenderTemplate("Templates/Download.html");
         }
         
         [HttpGet("/")]
@@ -35,7 +39,7 @@ namespace TextDifficultyDeterminer.HTMXFrontend.Controllers
                 ContentType = "text/html"
             };
         }
-        [HttpGet("/CreateLanguage")]
+        [HttpGet("/language")]
         public ContentResult CreateLanguage()
         {
             //await Task.CompletedTask;
@@ -45,7 +49,7 @@ namespace TextDifficultyDeterminer.HTMXFrontend.Controllers
                 ContentType = "text/html"
             };
         }
-        [HttpPost("/CreateLanguage")]
+        [HttpPost("/language")]
         [Consumes("application/x-www-form-urlencoded")]
         public async Task<ContentResult> CreateLanguage([FromForm]string LanguageName)
         {
@@ -68,7 +72,7 @@ namespace TextDifficultyDeterminer.HTMXFrontend.Controllers
                 };
             }
         }
-        [HttpGet("/LoadNewFilesIntoLanguage")]
+        [HttpGet("/load")]
         public async Task<ContentResult> LoadNewFilesIntoLanguageForm()
         {
             var languages = await _mediator.Send(new GetLanguagesQuery());
@@ -84,7 +88,7 @@ namespace TextDifficultyDeterminer.HTMXFrontend.Controllers
             };
         }
 
-        [HttpPost("/LoadNewFilesIntoLanguage")]
+        [HttpPost("/load")]
         public async Task<ContentResult> LoadNewFilesIntoLanguageForm([FromForm] List<IFormFile> Files, [FromForm] Guid Language)
         {
             var result = true;
@@ -120,6 +124,71 @@ namespace TextDifficultyDeterminer.HTMXFrontend.Controllers
                     ContentType = "text/html"
                 };
             }
+        }
+
+        [HttpGet("/check")]
+        public async Task<ContentResult> CheckFilesAgainstDatabasePage()
+        {
+            var languages = await _mediator.Send(new GetLanguagesQuery());
+            var parameters = new ScriptObject();
+            parameters["Languages"] = languages.LanguageList;
+            Context.PushGlobal(parameters);
+            var content = CheckFilesAgainstDatabaseTemplate.Render(Context);
+            Context.PopGlobal();
+            return new ContentResult
+            { 
+                Content = content, 
+                ContentType = "text/html"
+            };
+        }
+        [HttpPost("/check")]
+        public async Task<ActionResult> CheckFilesAgainstDatabase([FromForm] List<IFormFile> Files, [FromForm] Guid Language)
+        {
+            var result = true;
+            Dictionary<string, string> dict = new();
+            var numberOfTokens = 0;
+            System.Diagnostics.Debug.WriteLine(Files.Count);
+            foreach(var file in Files)
+            {
+                if(file.ContentType != "text/plain")
+                    continue;
+                var reader = new StreamReader(file.OpenReadStream());
+                var textForFile = reader.ReadToEnd();
+                dict[file.FileName] = textForFile;
+                numberOfTokens += textForFile.Length;
+                System.Diagnostics.Debug.WriteLine($"{numberOfTokens}");
+
+            }
+            var container = await ProcessFiles.CheckFilesAgainstDatabase(Language, dict);
+            var excelFile = await _mediator.Send(new TextContainerToExcelCommand { Container = container});
+            var stream = new MemoryStream();
+            excelFile.SaveAs(stream);
+            stream.Position = 0;
+            if(result)
+            {
+                HttpContext.Response.Headers.Add("HX-Trigger", "file-finished");
+                HttpContext.Response.Headers.Add("Content-Disposition", "attachment; filename=\"Result.xlsx\"");
+                var complete = new FileContentResult(stream.ToArray(), "application/octet-stream");
+                return complete;
+            }
+            else
+            {
+                return new ContentResult
+                { 
+                    Content = "<p>Error!</p>", 
+                    ContentType = "text/html"
+                };
+            }
+        }
+        [HttpGet("downloadscript")]
+        public async Task<ContentResult> ReturnDownloadInfo()
+        {
+            var content = DownloadTemplate.Render(Context);
+            return new ContentResult
+            { 
+                Content = content, 
+                ContentType = "text/html"
+            };
         }
     }
 }

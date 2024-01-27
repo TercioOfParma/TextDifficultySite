@@ -1,0 +1,8 @@
+<a id="download-link" download="Result.xlsx" type="application/octet-stream">Download Result</a>
+
+<script>
+    var csv = document.getElementById("result").innerText;
+    var data = new Blob([csv]);
+    var a = document.getElementById('download-link');
+    a.href = URL.createObjectURL(data);
+</script>

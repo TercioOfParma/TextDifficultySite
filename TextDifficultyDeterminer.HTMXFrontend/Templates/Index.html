@@ -9,10 +9,10 @@
 
 
 
-<button type="button" hx-get="/CreateLanguage" hx-target="#createlanguage" hx-swap="innerHtml">Create Language</button>
+<button type="button" hx-get="/language" hx-target="#createlanguage" hx-swap="innerHtml">Create Language</button>
 <div id="createlanguage"></div>
 
-<button type="button" hx-get="/LoadNewFilesIntoLanguage" hx-target="#addtolanguage" hx-swap="innerHtml" hx-trigger="new-language-created from:body, click">Add Text to Language</button>
+<button type="button" hx-get="/load" hx-target="#addtolanguage" hx-swap="innerHtml" hx-trigger="new-language-created from:body, click">Add Text to Language</button>
 <div id="addtolanguage"></div>
 
 

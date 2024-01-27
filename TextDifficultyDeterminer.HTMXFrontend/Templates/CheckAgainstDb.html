@@ -1,17 +1,16 @@
 {{ include 'Header.html' }}
-<h3>Include Files for New Language</h3>
+<h3>Load New Files into a Language</h3>
 
-<form id="AddToLanguage">
+<form id="check" enctype="multipart/form-data" action="/check" method="POST" hx-boost="false">
     <select name="Language">
     {{for $Language in Languages}}
         <option value="{{ $Language.id }}">{{ $Language.language_name }}</option>
     {{end}}
     </select>
     <input name="Files" type="file" multiple> </input>
+    <br>
+    <button type="submit">Check</button>
 </form>
-<button type="button" hx-encoding="multipart/form-data" hx-post="/load" hx-target="#result" hx-swap="innerhtml" hx-include="#AddToLanguage">Submit</button>
 
-<div id="result">
 
-</div>
 {{ include 'Footer.html'}}
