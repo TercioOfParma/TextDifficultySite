@@ -10,13 +10,15 @@ These are notes for refactoring
 - Provide an indication in the browser that the process is completed
 
 # Application
-
+- Make Loading Content Take in Lists rather than Individual Files
 
 # Infrastructure
 
 
 # Domain
-
+- Figure out why the difficulty scoring is so slow 
+- Remove all of the Converts
+- Ideally, figure out how to store BigInteger in a Database
 
 # HTMXFrontend
 

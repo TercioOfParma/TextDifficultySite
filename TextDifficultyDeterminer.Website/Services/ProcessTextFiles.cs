@@ -21,12 +21,29 @@ namespace TextDifficultyDeterminer.Website.Services
         }
         public async Task LoadFilesIntoDatabase(Guid LanguageId, Dictionary<string, string> files)
         {
-            foreach(var file in files) 
-            {
-                var converted = await Mediator.Send(new LoadFileIntoDatabaseCommand { Filename = file.Key, Text = file.Value, LanguageId = LanguageId});
-            }
+            await Mediator.Send(new LoadFileIntoDatabaseCommand { FilesAndFilenames = files,LanguageId = LanguageId});
         }
         public async Task<TextContainer> CheckFilesAgainstDatabase(Guid LanguageId, Dictionary<string, string> files)
+        {
+            var timeBefore = DateTime.Now;
+            var dictionary = (await Mediator.Send(new GetFrequencyDictionaryQuery { LanguageId = LanguageId})).Dictionary;
+            var timeAfter = DateTime.Now;
+
+            Console.WriteLine($"Time Dictionary {(timeAfter - timeBefore).TotalSeconds}");
+            timeBefore = DateTime.Now;
+            var container = await GenerateTextContainer(files);
+            timeAfter = DateTime.Now;
+
+            Console.WriteLine($"Time Generate Text Container {(timeAfter - timeBefore).TotalSeconds}");
+            timeBefore = DateTime.Now;
+            container.Files.ForEach(x => x.GenerateScore(dictionary));  
+            timeAfter = DateTime.Now;
+
+            Console.WriteLine($"Time Generate Score {(timeAfter - timeBefore).TotalSeconds}");
+    
+            return container; 
+        }
+        private async Task<TextContainer> GenerateTextContainer(Dictionary<string, string> files)
         {
             var containerList = new List<TextContainerFile>();
             foreach(var file in files)
@@ -34,33 +51,13 @@ namespace TextDifficultyDeterminer.Website.Services
                 var converted = await Mediator.Send(new TextFileToTextContainerCommand { Filename = file.Key, Text = file.Value});
                 containerList.Add(converted);
             }
-            var dictionary = (await Mediator.Send(new GetFrequencyDictionaryQuery { LanguageId = LanguageId})).Dictionary;
-            var container = new TextContainer(containerList, true);
-            container.ConcatDictionary = dictionary;
-
-            foreach(var file in container.Files)
-            {
-                file.GenerateScore(dictionary);
-                Console.WriteLine($"{file.Name} : {file.Scores.RealisticReadingThreshold}");
-            }            
-            return container; 
+            return new TextContainer(containerList, false);
         }
 
         public async Task<TextContainer> LoadFiles(Dictionary<string, string> files)
         {
-            var containerList = new List<TextContainerFile>();
-            foreach(var file in files)
-            {
-                var converted = await Mediator.Send(new TextFileToTextContainerCommand { Filename = file.Key, Text = file.Value});
-                containerList.Add(converted);
-            }
-            var container = new TextContainer(containerList, false);
-            foreach(var file in container.Files)
-            {
-                file.GenerateScore(container.ConcatDictionary);
-                Console.WriteLine($"{file.Name} : {file.Scores.RealisticReadingThreshold}");
-            }
-
+            var container = await GenerateTextContainer(files);
+            container.Files.ForEach(x => x.GenerateScore(container.ConcatDictionary));  
             return container;
         }
     }

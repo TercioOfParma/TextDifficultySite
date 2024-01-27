@@ -34,6 +34,8 @@ namespace TextDifficultyDeterminer.Website.CheckAgainstDatabase
 
         protected async Task HandleCorpus()
         {
+            Loading = true;
+            var timeBefore = DateTime.Now;
             var fileList = FilesToUpload;
             Dictionary<string, string> dict = new();
             foreach(var file in fileList)
@@ -52,6 +54,9 @@ namespace TextDifficultyDeterminer.Website.CheckAgainstDatabase
             stream.Position = 0;
             using var streamRef = new DotNetStreamReference(stream: stream);
             Complete = true;
+            Loading = false;
+            var timeAfter = DateTime.Now;
+            Console.WriteLine($"Time {(timeAfter - timeBefore).TotalSeconds}");
             await JS.InvokeVoidAsync("downloadFileFromStream", "Test.xlsx", streamRef);
         }
 

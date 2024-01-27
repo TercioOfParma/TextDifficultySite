@@ -20,8 +20,9 @@ public class FrequencyDictionary
         var toIterate = words.ConvertAll(x => new FrequencyWord(x.Word, x.Language, x.FrequencyOfWord));
         while(toIterate.Count != 0)
         {
-            var word = toIterate.First();
+            var word = toIterate.FirstOrDefault();
             var toChange = Words.FirstOrDefault(x => x.Word == word.Word);
+
             if(toChange == null)
                 Words.Add(word);
             else 

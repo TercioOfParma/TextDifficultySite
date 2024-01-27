@@ -27,6 +27,8 @@ namespace TextDifficultyDeterminer.Website.TestCorpus
             FilesToUpload = e.GetMultipleFiles(MAX_TEXT_FILES);
         public async Task HandleCorpus()
         {
+            Loading = true;
+            Complete = false;
             var fileList = FilesToUpload;
             Dictionary<string, string> dict = new();
             foreach(var file in fileList)
@@ -47,6 +49,8 @@ namespace TextDifficultyDeterminer.Website.TestCorpus
             using var streamRef = new DotNetStreamReference(stream: stream);
 
             await JS.InvokeVoidAsync("downloadFileFromStream", "Test.xlsx", streamRef);
+            Loading = false;
+            Complete = true;
         }
 
     }

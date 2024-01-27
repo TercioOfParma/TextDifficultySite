@@ -1,13 +1,7 @@
 using TextDifficultyDeterminer.Website.Shared;
-using TextDifficultyDeterminer.Website.Services;
 using TextDifficultyDeterminer.Website.Dtos;
 using Radzen.Blazor;
-using Radzen;
-using Microsoft.JSInterop;
-using System.Text.Json;
-using Microsoft.AspNetCore.Components;
-using ClosedXML.Excel;
-using MediatR;
+
 using Microsoft.AspNetCore.Components.Forms;
 
 namespace TextDifficultyDeterminer.Website.UploadToDatabase 
@@ -15,8 +9,6 @@ namespace TextDifficultyDeterminer.Website.UploadToDatabase
     public class UploadTextBoxBase : AppComponent 
     {
         public TestCorpusUploadDto TestCorpusUploadDto {get; set; } = new();
-        [Inject]
-        protected ProcessTextFiles TextFiles {get; set;}
         public Guid LanguageId {get; set;}
         public List<Language> LanguageList {get; set;}
         public RadzenUpload Upload {get;set;} = new();
@@ -32,8 +24,11 @@ namespace TextDifficultyDeterminer.Website.UploadToDatabase
             FilesToUpload = e.GetMultipleFiles(MAX_TEXT_FILES);
         protected async Task HandleCorpus()
         {
+            Loading = true;
+            Complete = false;
+            Error = false;
             var fileList = FilesToUpload;
-            Dictionary<string, string> dict = new();
+            var dict = new Dictionary<string, string> ();
             foreach(var file in fileList)
             {
                 if(file.ContentType != "text/plain")
@@ -42,8 +37,13 @@ namespace TextDifficultyDeterminer.Website.UploadToDatabase
                 var textForFile = await reader.ReadToEndAsync();
                 dict[file.Name] = textForFile;
             }
-
-            await TextFiles.LoadFilesIntoDatabase(LanguageId, dict);
+            var timeBefore = DateTime.Now;
+            Complete = await Mediator.Send(new LoadFileIntoDatabaseCommand { FilesAndFilenames = dict,LanguageId = LanguageId});
+            var timeAfter = DateTime.Now;
+            Console.WriteLine($"Time {(timeAfter - timeBefore).TotalSeconds}");
+            Loading = false;
+            if(!Complete)
+                Error = true;
         }
 
     }

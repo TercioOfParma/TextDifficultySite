@@ -5,27 +5,24 @@ public class DifficultyEvaluatorService
     public const double FREQUENCY_MULTIPLIER = 12.0;
     private const double REALISTIC_READING_THRESHOLD = 0.95;
     private const double EXTENSIVE_READING_THRESHOLD = 0.98;
-    public static TextScores GenerateScore(string name, string text, FrequencyDictionary dictToCheck)
+    public static TextScores GenerateScore(TextContainerFile file, FrequencyDictionary dictToCheck)
     {
         var score = new TextScores();
-        var edited = new TextContainerFile(name, text);
+        var edited = new TextContainerFile(file.Name, file.FileContents, file.FrequencyDictionaryForThisFile, file.Language);
         var wordList = new List<FrequencyWord>();
-        var wordCount = 0;
+        long wordCount = 0;
         var uniqueWords = 0;
         while(edited.FrequencyDictionaryForThisFile.Words.Count != 0)
         {
             var word = edited.FrequencyDictionaryForThisFile.Words.First();
-            wordCount += Convert.ToInt32(word.FrequencyOfWord);
+            wordCount += word.FrequencyOfWord;
             uniqueWords += 1;
             var dictEntry = dictToCheck.Words.FirstOrDefault(x => x.Word == word.Word);
             if(dictEntry != null)
-            {
                 word.DifficultyScore = Convert.ToInt64(dictToCheck.OverallWordCount / dictEntry.FrequencyOfWord * FREQUENCY_MULTIPLIER);
-            }
             else
-            { 
                 word.DifficultyScore = Convert.ToInt64(dictToCheck.OverallWordCount * FREQUENCY_MULTIPLIER);  
-            }
+
             wordList.Add(word);
             edited.FrequencyDictionaryForThisFile.Words.RemoveAll(x => x.Word == word.Word);
         }
@@ -38,12 +35,12 @@ public class DifficultyEvaluatorService
 
         var realisticIndex = FindWordForThreshold(realisticThreshold, wordList);
         var extensiveIndex = FindWordForThreshold(extensiveThreshold, wordList);
-        score.Name = name; 
+        score.Name = file.Name; 
         score.UniqueWords = uniqueWords;
         score.WordCount = wordCount; 
         score.RealisticReadingThreshold = Convert.ToInt32(realisticIndex.DifficultyScore);
         score.ExtendedReadingThreshold = Convert.ToInt32(extensiveIndex.DifficultyScore); 
-        Console.WriteLine($"{name} Difficulty Score generated!");
+        Console.WriteLine($"{file.Name} Difficulty Score generated!");
         return score; 
     }
 

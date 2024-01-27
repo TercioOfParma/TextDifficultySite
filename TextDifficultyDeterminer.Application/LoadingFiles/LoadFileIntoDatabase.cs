@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Http;
 
 public class LoadFileIntoDatabaseCommand : IRequest<bool>
 {
-    public string Text {get; set;}
-    public string Filename {get; set;}
+    public Dictionary<string, string> FilesAndFilenames {get; set;}
     public Guid LanguageId {get; set;}
 }
 
@@ -26,14 +25,15 @@ public class LoadFileIntoDatabaseHandler : IRequestHandler<LoadFileIntoDatabaseC
     }
     async Task<bool> IRequestHandler<LoadFileIntoDatabaseCommand, bool>.Handle(LoadFileIntoDatabaseCommand request, CancellationToken cancellationToken)
     {
-
-        var dictionaryGenerated = new TextContainerFile(request.Filename, request.Text);
-        foreach(var word in dictionaryGenerated.FrequencyDictionaryForThisFile.Words)
+        var containerList = new List<TextContainerFile>();
+        foreach(var file in request.FilesAndFilenames)
         {
-            word.Language = request.LanguageId;
+            Console.WriteLine(file.Key);
+            var dictionaryGenerated = new TextContainerFile(file.Key, file.Value, request.LanguageId);
+            containerList.Add(dictionaryGenerated);
         }
 
-        await LoadIntoDatabaseService.LoadTextContainerFileIntoDatabase(dictionaryGenerated, request.LanguageId, _db);
+        await LoadIntoDatabaseService.LoadTextContainerFileIntoDatabase(containerList, request.LanguageId, _db);
         return true;
     }
 }
