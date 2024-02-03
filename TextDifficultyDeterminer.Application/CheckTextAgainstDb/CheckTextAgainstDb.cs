@@ -33,12 +33,14 @@ class CheckTextAgainstDbHandler : IRequestHandler<CheckTextAgainstDbQuery, Check
     }
     private async Task<TextContainer> GenerateTextContainer(Dictionary<string, string> files)
     {
-        var containerList = new List<TextContainerFile>();
+        var tasks = new List<Task<TextContainerFile>>();
         foreach(var file in files)
         {
-            var converted = await Mediator.Send(new TextFileToTextContainerCommand { Filename = file.Key, Text = file.Value});
-            containerList.Add(converted);
+            tasks.Add(Task.Run(async () => await Mediator.Send(new TextFileToTextContainerCommand { Filename = file.Key, Text = file.Value})));
         }
-        return new TextContainer(containerList, false);
+        
+        var containerList = await Task.WhenAll(tasks.ToArray());
+
+        return new TextContainer(containerList.ToList(), false);
     }
 }
