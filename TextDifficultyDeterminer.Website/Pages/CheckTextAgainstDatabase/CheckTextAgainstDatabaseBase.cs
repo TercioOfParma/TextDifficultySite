@@ -21,7 +21,7 @@ namespace TextDifficultyDeterminer.Website.CheckAgainstDatabase
         public Guid LanguageId {get; set;}
         public List<Language> LanguageList {get; set;}
         public IReadOnlyList<IBrowserFile> FilesToUpload {get; set;}
-        private const int MAX_TEXT_FILES = 1000;
+        private const int MAX_TEXT_FILES = 10000;
 
         protected async override Task OnInitializedAsync()
         {

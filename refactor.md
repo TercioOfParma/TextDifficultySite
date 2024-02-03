@@ -17,6 +17,7 @@ These are notes for refactoring
 
 # Domain
 - Figure out why the difficulty scoring is so slow 
+    - It's very very strange why copying into a new dict is somehow slower than recalculating the whole thing?? Like 18 seconds slower???
 - Remove all of the Converts
 - Ideally, figure out how to store BigInteger in a Database
 

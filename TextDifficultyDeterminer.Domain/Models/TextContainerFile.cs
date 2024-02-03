@@ -28,16 +28,7 @@ public class TextContainerFile
         Name = name;
         FileContents =  new string(fileContents.Select(c => char.IsPunctuation(c) || char.IsWhiteSpace(c) ? ' ' : c).ToArray());
         Language = languageId;
-        FrequencyDictionaryForThisFile = new FrequencyDictionary{ 
-            OverallWordCount = dict.OverallWordCount, 
-            Words = dict.Words.ConvertAll(x => new FrequencyWord { 
-                DifficultyScore = x.DifficultyScore, 
-                FrequencyOfWord = x.FrequencyOfWord,
-                FrequencyWordId = x.FrequencyWordId,
-                Language = x.Language,
-                Word = x.Word
-            })
-        };
+        FrequencyDictionaryForThisFile = dict;
     }
 
     public void GenerateScore(FrequencyDictionary toRankAgainst) => Scores = DifficultyEvaluatorService.GenerateScore(this, toRankAgainst);
