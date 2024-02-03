@@ -1,6 +1,5 @@
 using MediatR;
 using TextDifficultyDeterminer.Website.Shared;
-using TextDifficultyDeterminer.Website.Services;
 using TextDifficultyDeterminer.Website.Dtos;
 using Microsoft.AspNetCore.Components.Forms;
 using Radzen.Blazor;
@@ -16,8 +15,6 @@ namespace TextDifficultyDeterminer.Website.CheckAgainstDatabase
     {
         [Inject]
         public IJSRuntime JS {get; set;}
-        [Inject]
-        protected ProcessTextFiles TextFiles {get; set;}
         public Guid LanguageId {get; set;}
         public List<Language> LanguageList {get; set;}
         public IReadOnlyList<IBrowserFile> FilesToUpload {get; set;}
@@ -47,8 +44,8 @@ namespace TextDifficultyDeterminer.Website.CheckAgainstDatabase
                 dict[file.Name] = textForFile;
             }
 
-            var container = await TextFiles.CheckFilesAgainstDatabase(LanguageId, dict);
-            var excelFile = await Mediator.Send(new TextContainerToExcelCommand { Container = container});
+            var container = await Mediator.Send(new CheckTextAgainstDbQuery { Files = dict, LanguageId = LanguageId});
+            var excelFile = await Mediator.Send(new TextContainerToExcelCommand { Container = container.Text});
             var stream = new MemoryStream();
             excelFile.SaveAs(stream);
             stream.Position = 0;

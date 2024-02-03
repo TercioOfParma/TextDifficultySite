@@ -10,8 +10,6 @@ using System.Text.Json;
 using System.Text;
 
 
-using TextDifficultyDeterminer.Website.Services;
-
 namespace TextDifficultyDeterminer.Website.Controllers 
 {
     [Microsoft.AspNetCore.Mvc.Route("api/")]
@@ -20,12 +18,10 @@ namespace TextDifficultyDeterminer.Website.Controllers
     {
         protected IMediator Mediator {get; set;}
         public IWebHostEnvironment WebHostEnvironment {get; set;}
-        protected ProcessTextFiles Files {get; set;}
 
-        public TextCorpusControllerApi(IMediator mediator, IWebHostEnvironment webHostEnvironment, ProcessTextFiles files)
+        public TextCorpusControllerApi(IMediator mediator, IWebHostEnvironment webHostEnvironment)
         {
             Mediator = mediator;
-            Files = files;
             WebHostEnvironment = webHostEnvironment;
         }
         [HttpPost("LoadCorpus/{LanguageId}")]
@@ -40,7 +36,7 @@ namespace TextDifficultyDeterminer.Website.Controllers
                 var textForFile = reader.ReadToEnd();
                 dict[file.FileName] = textForFile;
             }
-            await Files.LoadFilesIntoDatabase(LanguageId, dict);
+            await Mediator.Send(new LoadFileIntoDatabaseCommand { FilesAndFilenames = dict, LanguageId = LanguageId});
             return Ok();
         }
         [HttpPost("TestText/{LanguageId}")]
@@ -55,24 +51,7 @@ namespace TextDifficultyDeterminer.Website.Controllers
                 var textForFile = reader.ReadToEnd();
                 dict[file.FileName] = textForFile;
             }
-            var container = await Files.CheckFilesAgainstDatabase(LanguageId, dict);
-            var contString = JsonSerializer.Serialize(container);
-            return Ok(contString);
-        }
-
-        [HttpPost("LoadTestCorpus")]
-        public async Task<IActionResult> LoadFiles(IList<IFormFile> files)
-        {
-            Dictionary<string, string> dict = new();
-            foreach(var file in files)
-            {
-                if(file.ContentType != "text/plain")
-                    continue;
-                var reader = new StreamReader(file.OpenReadStream());
-                var textForFile = reader.ReadToEnd();
-                dict[file.FileName] = textForFile;
-            }
-            var container = await Files.LoadFiles(dict);
+            var container = await Mediator.Send(new CheckTextAgainstDbQuery{ Files = dict, LanguageId = LanguageId});
             var contString = JsonSerializer.Serialize(container);
             return Ok(contString);
         }
