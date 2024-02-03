@@ -2,7 +2,7 @@
 
 public class DifficultyEvaluatorService 
 {
-    public const double FREQUENCY_MULTIPLIER = 12.0;
+    public const long FREQUENCY_MULTIPLIER = 12;
     private const double REALISTIC_READING_THRESHOLD = 0.95;
     private const double EXTENSIVE_READING_THRESHOLD = 0.98;
     public static TextScores GenerateScore(TextContainerFile file, FrequencyDictionary dictToCheck)
@@ -19,9 +19,9 @@ public class DifficultyEvaluatorService
             uniqueWords += 1;
             var dictEntry = dictToCheck.Words.FirstOrDefault(x => x.Word == word.Word);
             if(dictEntry != null)
-                word.DifficultyScore = Convert.ToInt64(dictToCheck.OverallWordCount / dictEntry.FrequencyOfWord * FREQUENCY_MULTIPLIER);
+                word.DifficultyScore = dictToCheck.OverallWordCount / dictEntry.FrequencyOfWord * FREQUENCY_MULTIPLIER;
             else
-                word.DifficultyScore = Convert.ToInt64(dictToCheck.OverallWordCount * FREQUENCY_MULTIPLIER);  
+                word.DifficultyScore = dictToCheck.OverallWordCount * FREQUENCY_MULTIPLIER;  
 
             wordList.Add(word);
             edited.FrequencyDictionaryForThisFile.Words.RemoveAll(x => x.Word == word.Word);
@@ -29,8 +29,8 @@ public class DifficultyEvaluatorService
         edited.FrequencyDictionaryForThisFile.Words = wordList;
         wordList = wordList.OrderBy(x => x.DifficultyScore).ToList();
 
-        long realisticThreshold = Convert.ToInt64(Math.Round(wordCount * REALISTIC_READING_THRESHOLD));
-        long extensiveThreshold = Convert.ToInt64(Math.Round(wordCount * EXTENSIVE_READING_THRESHOLD));
+        long realisticThreshold = Convert.ToInt64(wordCount * REALISTIC_READING_THRESHOLD);//Convert rounds for you
+        long extensiveThreshold = Convert.ToInt64(wordCount * EXTENSIVE_READING_THRESHOLD);
 
 
         var realisticIndex = FindWordForThreshold(realisticThreshold, wordList);
