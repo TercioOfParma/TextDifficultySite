@@ -1,4 +1,5 @@
 
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 
 public class TextContainerFile 
@@ -31,7 +32,11 @@ public class TextContainerFile
         FrequencyDictionaryForThisFile = dict;
     }
 
-    public void GenerateScore(FrequencyDictionary toRankAgainst) => Scores = DifficultyEvaluatorService.GenerateScore(this, toRankAgainst);
+    public async Task GenerateScore(FrequencyDictionary toRankAgainst)
+    { 
+        Scores = DifficultyEvaluatorService.GenerateScore(this, toRankAgainst);
+        await Task.CompletedTask;
+    }
     public void OutputInformation() => FrequencyDictionaryForThisFile.Words.ForEach(x => Console.WriteLine(x.Word + " : " + x.FrequencyOfWord));
 
 

@@ -22,7 +22,13 @@ class CheckTextAgainstDbHandler : IRequestHandler<CheckTextAgainstDbQuery, Check
     {
         var dictionary = (await Mediator.Send(new GetFrequencyDictionaryQuery { LanguageId = request.LanguageId})).Dictionary;
         var container = await GenerateTextContainer(request.Files);
-        container.Files.ForEach(x => x.GenerateScore(dictionary));  
+        var tasks = new List<Task>();
+
+        container.Files.ForEach(x => tasks.Add(Task.Run(() => x.GenerateScore(dictionary))));  
+        
+        await Task.WhenAll(tasks.ToArray());
+
+        
         return new CheckTextAgainstDbResult { Text = container };
     }
     private async Task<TextContainer> GenerateTextContainer(Dictionary<string, string> files)
