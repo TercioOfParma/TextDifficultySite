@@ -28,7 +28,7 @@ public class LoadFileIntoDatabaseHandler : IRequestHandler<LoadFileIntoDatabaseC
         var containerList = new List<TextContainerFile>();
         foreach(var file in request.FilesAndFilenames)
         {
-            Console.WriteLine(file.Key);
+            Console.WriteLine("Generating Container: " + file.Key);
             var dictionaryGenerated = new TextContainerFile(file.Key, file.Value, request.LanguageId);
             containerList.Add(dictionaryGenerated);
         }

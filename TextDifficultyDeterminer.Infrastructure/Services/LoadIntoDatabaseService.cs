@@ -9,7 +9,7 @@ public static class LoadIntoDatabaseService
         var newWords = new List<FrequencyWord>();
         foreach(var file in files)
         {
-            Console.WriteLine(file.Name);
+            Console.WriteLine("Preparing for Database " + file.Name);
             foreach(var word in file.FrequencyDictionaryForThisFile.Words)
             {
                 var InDb = relevantWords.Where(x => x.Word == word.Word).FirstOrDefault();

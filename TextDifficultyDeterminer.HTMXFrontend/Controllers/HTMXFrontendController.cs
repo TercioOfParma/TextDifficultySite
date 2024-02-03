@@ -18,12 +18,10 @@ namespace TextDifficultyDeterminer.HTMXFrontend.Controllers
         public Template DownloadTemplate {get; set;}
         public TemplateContext Context {get; set;}
         public IMediator _mediator {get; set;}
-        protected ProcessTextFilesService ProcessFiles {get; set;}
-        public HTMXFrontendController(Scriban.Runtime.ITemplateLoader templateLoader, IMediator mediator, ProcessTextFilesService process)
+        public HTMXFrontendController(Scriban.Runtime.ITemplateLoader templateLoader, IMediator mediator)
         {
             Context = new TemplateContext();
             _mediator = mediator;
-            ProcessFiles = process;
             Context.TemplateLoader = templateLoader;
             IndexTemplate = RenderTemplateService.RenderTemplate("Templates/Index.html");
             CreateLanguageTemplate = RenderTemplateService.RenderTemplate("Templates/CreateLanguage.html");
@@ -125,7 +123,7 @@ namespace TextDifficultyDeterminer.HTMXFrontend.Controllers
                 System.Diagnostics.Debug.WriteLine($"{numberOfTokens}");
 
             }
-            await ProcessFiles.LoadFilesIntoDatabase(Language, dict);
+            await _mediator.Send(new LoadFileIntoDatabaseCommand { FilesAndFilenames = dict,LanguageId = Language});
             if(result)
                 {
                 var complete = new ContentResult
@@ -190,8 +188,8 @@ namespace TextDifficultyDeterminer.HTMXFrontend.Controllers
                 System.Diagnostics.Debug.WriteLine($"{numberOfTokens}");
 
             }
-            var container = await ProcessFiles.CheckFilesAgainstDatabase(Language, dict);
-            var excelFile = await _mediator.Send(new TextContainerToExcelCommand { Container = container});
+            var container = await _mediator.Send(new CheckTextAgainstDbQuery { LanguageId = Language, Files = dict});
+            var excelFile = await _mediator.Send(new TextContainerToExcelCommand { Container = container.Text});
             var stream = new MemoryStream();
             excelFile.SaveAs(stream);
             stream.Position = 0;

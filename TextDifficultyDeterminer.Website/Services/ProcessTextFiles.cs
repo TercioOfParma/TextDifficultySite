@@ -39,7 +39,7 @@ namespace TextDifficultyDeterminer.Website.Services
             container.Files.ForEach(x => x.GenerateScore(dictionary));  
             timeAfter = DateTime.Now;
 
-            Console.WriteLine($"Time Generate Score {(timeAfter - timeBefore).TotalSeconds}");
+            Console.WriteLine($"Time Generate Scores {(timeAfter - timeBefore).TotalSeconds}");
     
             return container; 
         }
