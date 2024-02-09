@@ -1,21 +1,88 @@
-* {box-sizing: border-box;}
 
-body { margin:0px}
+* {box-sizing: border-box;
+    --main-bg-color: #d3c08c;
+    --main-content-color: #ebdcb3;
+    --trans-bg-color: #dfd7c3;
+    --button-submit-color: rgb(207, 182, 67);
+    --button-submit-trans-color: rgb(240, 215, 105);
+}
+body 
+{ 
+    margin:0px;
+    background:linear-gradient(210deg,var(--main-bg-color), var(--trans-bg-color));
+    height:100vh;
+    font-weight:normal;
+}
+
+button {
+    background-color: var(--button-submit-color);
+    
+    padding: 7px 32px;
+    text-align:center;
+    display: inline-block;
+}
+
+button:hover{
+    animation-name: hover-submit-button;
+    animation-duration:1s;
+    animation-fill-mode:forwards;
+}
+
+div.content {
+    background-color: var(--main-content-color);
+    border-style:solid;
+    margin-top:0.9%;
+    margin-right: 10%;
+    margin-left: 13%;
+    height:90%;
+}
 
 div.header
 {
-    height:10%;
-    background-color: #d9b757;
+    height:4%;
 }
 
 div.navbar-menu {
     float:left;
-    border-color: black;
-    background-color: #d9b757;
-    border-width: 20px;
     height:100%;
+    width:12%;
+    margin-right:1%;
 }
 
 dt.navbar-menu-item {
     background-color: #a89358;
+    border-style:solid;
+    width:100%;
+    height:3%;
+    font-size:0.9vw;
+}
+
+dt.navbar-menu-item:hover
+{
+    animation-duration: 1s;
+    animation-name:hover-navbar;
+    animation-fill-mode:forwards;
+}
+
+
+@keyframes hover-navbar{
+    from 
+    {
+        background-color: #a89358;
+    }
+    to 
+    {
+        background-color: #d1bc81;
+    }
+}
+
+@keyframes hover-submit-button{
+    from 
+    {
+        background-color: var(--button-submit-color);
+    }
+    to 
+    {
+        background-color: var(--button-submit-trans-color);
+    }
 }

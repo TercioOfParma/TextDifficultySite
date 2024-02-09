@@ -18,6 +18,7 @@ namespace TextDifficultyDeterminer.HTMXFrontend.Controllers
                 {
                     contentType = "text/css";
                 }
+                Console.WriteLine(contentType);
                 return new ContentResult{ Content = result, ContentType = contentType};
             }
             catch(Exception e)
