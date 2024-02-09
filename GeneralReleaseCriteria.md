@@ -22,9 +22,16 @@ Security:
 
 
 # Second Version if over 10000 views in the first month
-- Hebrew/Arabic Script Support
+- Hebrew/Arabic Script Support 
 - East Asian Language Support
 - Option Groups for Different Uses and Registers of Language, or select Corpora (Vulgate, Street Slang etc.)
+- NOT ACCOUNTS OR CUSTOMISABLE THINGS:
+    - Difficulty across people is an entirely different project. This should only be to give a person an idea of the whole, not the particular
+
+
+# To Do
+
+Read a book on morphology, so that words can be properly processed by the machine.
 
 # Marketing
 
