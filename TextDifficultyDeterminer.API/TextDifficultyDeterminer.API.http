@@ -1,0 +1,6 @@
+@TextDifficultyDeterminer.API_HostAddress = http://localhost:5277
+
+GET {{TextDifficultyDeterminer.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
