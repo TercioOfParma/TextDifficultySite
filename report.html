@@ -120,7 +120,7 @@ table.stats tr.total td {
 
         <div class="info">
             
-            <p>During: <span class="l10n datetime">2024-02-09 20:15:53</span> - <span class="l10n datetime">2024-02-09 20:16:07</span></p>
+            <p>During: <span class="l10n datetime">2024-02-10 10:40:37</span> - <span class="l10n datetime">2024-02-10 10:43:09</span></p>
             <p>Target Host: <span>http://localhost:5277/CheckText</span></p>
             <p>Script: <span>locust.py</span></p>
         </div>
@@ -147,27 +147,27 @@ table.stats tr.total td {
                         <tr>
                             <td>POST</td>
                             <td>/CheckText</td>
-                            <td>12307</td>
-                            <td>12303</td>
-                            <td>304</td>
-                            <td>25</td>
-                            <td>4692</td>
-                            <td>5113</td>
-                            <td>896.1</td>
-                            <td>895.8</td>
+                            <td>4589</td>
+                            <td>4204</td>
+                            <td>1724</td>
+                            <td>1</td>
+                            <td>53053</td>
+                            <td>1</td>
+                            <td>30.3</td>
+                            <td>27.7</td>
                         </tr>
                     
                         <tr class="total">
                             <td></td>
                             <td>Aggregated</td>
-                            <td>12307</td>
-                            <td>12303</td>
-                            <td>304</td>
-                            <td>25</td>
-                            <td>4692</td>
-                            <td>5113</td>
-                            <td>896.1</td>
-                            <td>895.8</td>
+                            <td>4589</td>
+                            <td>4204</td>
+                            <td>1724</td>
+                            <td>1</td>
+                            <td>53053</td>
+                            <td>1</td>
+                            <td>30.3</td>
+                            <td>27.7</td>
                         </tr>
                     
                 </tbody>
@@ -196,27 +196,27 @@ table.stats tr.total td {
                         <tr>
                             <td>POST</td>
                             <td>/CheckText</td>
-                            <td>280</td>
-                            <td>290</td>
-                            <td>300</td>
-                            <td>320</td>
-                            <td>350</td>
-                            <td>390</td>
-                            <td>1700</td>
-                            <td>4700</td>
+                            <td>10</td>
+                            <td>15</td>
+                            <td>22</td>
+                            <td>30</td>
+                            <td>48</td>
+                            <td>16000</td>
+                            <td>36000</td>
+                            <td>53000</td>
                         </tr>
                     
                         <tr class="total">
                             <td></td>
                             <td>Aggregated</td>
-                            <td>280</td>
-                            <td>290</td>
-                            <td>300</td>
-                            <td>320</td>
-                            <td>350</td>
-                            <td>390</td>
-                            <td>1700</td>
-                            <td>4700</td>
+                            <td>10</td>
+                            <td>15</td>
+                            <td>22</td>
+                            <td>30</td>
+                            <td>48</td>
+                            <td>16000</td>
+                            <td>36000</td>
+                            <td>53000</td>
                         </tr>
                     
                 </tbody>
@@ -240,8 +240,29 @@ table.stats tr.total td {
                             <tr>
                                 <td>POST</td>
                                 <td>/CheckText</td>
+                                <td>Remote end closed connection without response</td>
+                                <td>7</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>POST</td>
+                                <td>/CheckText</td>
+                                <td>[Errno 111] Connection refused</td>
+                                <td>4194</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>POST</td>
+                                <td>/CheckText</td>
                                 <td>500 Server Error: Internal Server Error for url: http://localhost:5277/CheckText</td>
-                                <td>12303</td>
+                                <td>1</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>POST</td>
+                                <td>/CheckText</td>
+                                <td>[Errno 104] Connection reset by peer</td>
+                                <td>2</td>
                             </tr>
                         
                     </tbody>
@@ -531,12 +552,12 @@ function fillTasksFromRequest() {
     <script>
         
 var stats_history = {
-    "time": ["20:15:58", "20:16:03"].map(server_time => new Date(new Date().setUTCHours(...(server_time.split(":")))).toLocaleTimeString()),
-    "user_count": [{"value": 250}, {"value": 500}],
-    "current_rps": [{"users": 250, "value": 323.3333333333333}, {"users": 500, "value": 681.0}],
-    "current_fail_per_sec": [{"users": 250, "value": 323.3333333333333}, {"users": 500, "value": 680.5}],
-    "response_time_percentile_50": [{"users": 250, "value": 220.0}, {"users": 500, "value": 260.0}],
-    "response_time_percentile_95": [{"users": 250, "value": 420.0}, {"users": 500, "value": 400.0}],
+    "time": ["10:40:39", "10:40:44", "10:40:49", "10:40:54", "10:40:59", "10:41:04", "10:41:09", "10:41:14", "10:41:19", "10:41:24", "10:41:29", "10:41:34", "10:41:39", "10:41:44", "10:41:49", "10:41:54", "10:41:59", "10:42:04", "10:42:09", "10:42:14", "10:42:19", "10:42:24", "10:42:29", "10:42:34", "10:42:39", "10:42:44", "10:42:49", "10:42:54", "10:42:59", "10:43:04"].map(server_time => new Date(new Date().setUTCHours(...(server_time.split(":")))).toLocaleTimeString()),
+    "user_count": [{"value": 2}, {"value": 7}, {"value": 12}, {"value": 17}, {"value": 22}, {"value": 27}, {"value": 32}, {"value": 37}, {"value": 42}, {"value": 47}, {"value": 52}, {"value": 57}, {"value": 62}, {"value": 67}, {"value": 72}, {"value": 77}, {"value": 82}, {"value": 87}, {"value": 92}, {"value": 97}, {"value": 102}, {"value": 107}, {"value": 112}, {"value": 117}, {"value": 122}, {"value": 127}, {"value": 132}, {"value": 137}, {"value": 142}, {"value": 147}],
+    "current_rps": [{"users": 2, "value": 0}, {"users": 7, "value": 0.4}, {"users": 12, "value": 0.9}, {"users": 17, "value": 2.0}, {"users": 22, "value": 2.5}, {"users": 27, "value": 2.9}, {"users": 32, "value": 3.4}, {"users": 37, "value": 4.1}, {"users": 42, "value": 2.9}, {"users": 47, "value": 3.5}, {"users": 52, "value": 3.6}, {"users": 57, "value": 0.7}, {"users": 62, "value": 2.2}, {"users": 67, "value": 2.9}, {"users": 72, "value": 3.0}, {"users": 77, "value": 3.1}, {"users": 82, "value": 3.6}, {"users": 87, "value": 3.5}, {"users": 92, "value": 2.4}, {"users": 97, "value": 2.8}, {"users": 102, "value": 2.0}, {"users": 107, "value": 2.3}, {"users": 112, "value": 3.0}, {"users": 117, "value": 2.7}, {"users": 122, "value": 2.3}, {"users": 127, "value": 2.8}, {"users": 132, "value": 3.1}, {"users": 137, "value": 1.6}, {"users": 142, "value": 2.3}, {"users": 147, "value": 4.1}],
+    "current_fail_per_sec": [{"users": 2, "value": 0}, {"users": 7, "value": 0}, {"users": 12, "value": 0}, {"users": 17, "value": 0}, {"users": 22, "value": 0}, {"users": 27, "value": 0}, {"users": 32, "value": 0}, {"users": 37, "value": 0}, {"users": 42, "value": 0}, {"users": 47, "value": 0}, {"users": 52, "value": 0}, {"users": 57, "value": 0}, {"users": 62, "value": 0}, {"users": 67, "value": 0}, {"users": 72, "value": 0}, {"users": 77, "value": 0}, {"users": 82, "value": 0}, {"users": 87, "value": 0}, {"users": 92, "value": 0}, {"users": 97, "value": 0}, {"users": 102, "value": 0}, {"users": 107, "value": 0}, {"users": 112, "value": 0}, {"users": 117, "value": 0}, {"users": 122, "value": 0}, {"users": 127, "value": 0}, {"users": 132, "value": 0}, {"users": 137, "value": 0}, {"users": 142, "value": 0}, {"users": 147, "value": 0.1}],
+    "response_time_percentile_50": [{"users": 2, "value": 0}, {"users": 7, "value": 3600.0}, {"users": 12, "value": 3800.0}, {"users": 17, "value": 4000.0}, {"users": 22, "value": 4000.0}, {"users": 27, "value": 6100.0}, {"users": 32, "value": 6200.0}, {"users": 37, "value": 6400.0}, {"users": 42, "value": 10000.0}, {"users": 47, "value": 10000.0}, {"users": 52, "value": 10000.0}, {"users": 57, "value": 16000.0}, {"users": 62, "value": 16000.0}, {"users": 67, "value": 21000.0}, {"users": 72, "value": 21000.0}, {"users": 77, "value": 18000.0}, {"users": 82, "value": 19000.0}, {"users": 87, "value": 18000.0}, {"users": 92, "value": 21000.0}, {"users": 97, "value": 23000.0}, {"users": 102, "value": 26000.0}, {"users": 107, "value": 27000.0}, {"users": 112, "value": 30000.0}, {"users": 117, "value": 33000.0}, {"users": 122, "value": 34000.0}, {"users": 127, "value": 34000.0}, {"users": 132, "value": 37000.0}, {"users": 137, "value": 37000.0}, {"users": 142, "value": 38000.0}, {"users": 147, "value": 18}],
+    "response_time_percentile_95": [{"users": 2, "value": 0}, {"users": 7, "value": 3900.0}, {"users": 12, "value": 4300.0}, {"users": 17, "value": 4800.0}, {"users": 22, "value": 6200.0}, {"users": 27, "value": 6800.0}, {"users": 32, "value": 8800.0}, {"users": 37, "value": 8800.0}, {"users": 42, "value": 12000.0}, {"users": 47, "value": 14000.0}, {"users": 52, "value": 15000.0}, {"users": 57, "value": 18000.0}, {"users": 62, "value": 19000.0}, {"users": 67, "value": 28000.0}, {"users": 72, "value": 28000.0}, {"users": 77, "value": 22000.0}, {"users": 82, "value": 22000.0}, {"users": 87, "value": 23000.0}, {"users": 92, "value": 24000.0}, {"users": 97, "value": 30000.0}, {"users": 102, "value": 30000.0}, {"users": 107, "value": 30000.0}, {"users": 112, "value": 35000.0}, {"users": 117, "value": 35000.0}, {"users": 122, "value": 37000.0}, {"users": 127, "value": 37000.0}, {"users": 132, "value": 43000.0}, {"users": 137, "value": 42000.0}, {"users": 142, "value": 43000.0}, {"users": 147, "value": 36000.0}],
     "markers": [],
 };
         var rpsChart = new LocustLineChart($(".charts-container"), "Total Requests per Second", ["RPS", "Failures/s"], "reqs/s", ['#00ca5a', '#ff6d6d']);
