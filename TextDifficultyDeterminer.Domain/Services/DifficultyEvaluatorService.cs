@@ -20,6 +20,7 @@ public class DifficultyEvaluatorService
             var dictEntry = dictToCheck.Words.FirstOrDefault(x => x.Word == word.Word);
             if(dictEntry != null)
                 word.DifficultyScore = dictToCheck.OverallWordCount / dictEntry.FrequencyOfWord * FREQUENCY_MULTIPLIER;
+            
             else
                 word.DifficultyScore = dictToCheck.OverallWordCount * FREQUENCY_MULTIPLIER;  
 

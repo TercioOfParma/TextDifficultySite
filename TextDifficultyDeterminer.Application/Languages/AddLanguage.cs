@@ -14,7 +14,8 @@ class AddLanguageHandler : IRequestHandler<AddLanguageCommand, bool>
 
     async Task<bool> IRequestHandler<AddLanguageCommand, bool>.Handle(AddLanguageCommand request, CancellationToken cancellationToken)
     {
-        if(unitOfWork.Languages.Where(x => x.LanguageName == request.Language.LanguageName).Count() == 0)
+        var isLanguage = unitOfWork.Languages.Where(x => x.LanguageName == request.Language.LanguageName).Any();
+        if(!isLanguage)
         {
             await unitOfWork.Languages.AddAsync(request.Language);
             await unitOfWork.SaveChangesAsync();

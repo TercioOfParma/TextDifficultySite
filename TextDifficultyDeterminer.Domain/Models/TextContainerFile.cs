@@ -42,18 +42,13 @@ public class TextContainerFile
 
     private void GenerateFrequencyDictionary()
     {
-        var toLoop = new List<string>(FileContents.ToLower().Split(" "));
+        var toLoop = new List<string>(FileContents.ToLower().Split(" ")).ToList();
         var wordList = new List<FrequencyWord>();
         var checkInstancesLength = 0;
         while(toLoop.Count != 0)
         {
             var word = toLoop.FirstOrDefault();
-            if(String.IsNullOrWhiteSpace(word))
-            {
-                toLoop.RemoveAll(x => string.Equals(x, word));
-                continue;
-            }
-            var numberInstances = toLoop.Where(x => string.Equals(x, word)).ToList().Count;
+            var numberInstances = toLoop.Where(x => string.Equals(x, word)).Count();
             checkInstancesLength += numberInstances;
             wordList.Add(new FrequencyWord(word, Language, numberInstances));
 

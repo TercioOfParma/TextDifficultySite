@@ -5,21 +5,18 @@ public class TextContainer
     
     public List<TextContainerFile> Files {get; set;}
     public FrequencyDictionary ConcatDictionary {get; set;}
-    public TextContainer(List<TextContainerFile> files, bool databaseDict)
+    public TextContainer(List<TextContainerFile> files)
     {
         Files = files;
-        if(!databaseDict)
-            ConcatDictionary = GenerateConcatDictionary(files.Select(x => x.FrequencyDictionaryForThisFile).ToList());
     }
-
-    public static FrequencyDictionary GenerateConcatDictionary(List<FrequencyDictionary> dicts)
+    public async Task GenerateConcatDictionary()
     {
-        var overallFreq = new FrequencyDictionary();
-
-        foreach(var dict in dicts)
-            overallFreq.ApplyFrequencyWords(dict.Words);
-
-        overallFreq.CalculateDifficultyScores();
-        return overallFreq;
+        this.ConcatDictionary  = new FrequencyDictionary();
+        foreach(var file in Files)
+        {
+            var dict = file.FrequencyDictionaryForThisFile;
+            ConcatDictionary.ApplyFrequencyWords(dict.Words);
+        }
+        ConcatDictionary.CalculateDifficultyScores();
     }
 }
