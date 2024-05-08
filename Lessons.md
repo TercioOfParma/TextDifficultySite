@@ -5,3 +5,4 @@
 log(x) / log(y) = Score
 
 log(x) = Score * log(y) (Base^log(y) = y)
+4) Give more conscious thought to what data structures make sense
